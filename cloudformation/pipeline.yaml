@@ -211,7 +211,7 @@ Resources:
                       Configuration:
                         Owner: outthought
                         Repo: ami-builder-packer
-                        Branch: master
+                        Branch: development
                         OAuthToken: GitHubOAUTHToken
                       RunOrder: 1
                 - 
