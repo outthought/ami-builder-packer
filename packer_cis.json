@@ -35,7 +35,6 @@
     "snapshot_tags": {
       "Name": "{{user `ami_name`}}"
     },
-    # TODO Modify this name after removing the CloudWatch Logs agent.
     "ami_description": "Amazon Linux CIS with Cloudwatch Logs agent",
     "associate_public_ip_address": "true",
     "vpc_id": "{{user `vpc`}}",
