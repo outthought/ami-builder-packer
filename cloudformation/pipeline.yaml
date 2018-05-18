@@ -213,6 +213,7 @@ Resources:
                         Repo: ami-builder-packer
                         Branch: development
                         OAuthToken: GitHubOAUTHToken
+                      OutputArtifacts: SourceZip
                       RunOrder: 1
                 - 
                   Name: Build
