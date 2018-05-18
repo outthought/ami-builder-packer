@@ -3,7 +3,7 @@
     "vpc": "{{env `BUILD_VPC_ID`}}",
     "subnet": "{{env `BUILD_SUBNET_ID`}}",
     "aws_region": "{{env `AWS_REGION`}}",
-    "ami_name": "Prod-CIS-Latest-AMZN-{{isotime \"02-Jan-06 03_04_05\"}}"
+    "ami_name": "Test-AMZN-{{isotime \"02-Jan-06 03_04_05\"}}"
   },
   "builders": [{
     "name": "AWS AMI Builder - CIS",
@@ -35,6 +35,7 @@
     "snapshot_tags": {
       "Name": "{{user `ami_name`}}"
     },
+    # TODO Modify this name after removing the CloudWatch Logs agent.
     "ami_description": "Amazon Linux CIS with Cloudwatch Logs agent",
     "associate_public_ip_address": "true",
     "vpc_id": "{{user `vpc`}}",
