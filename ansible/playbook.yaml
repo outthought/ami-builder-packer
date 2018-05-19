@@ -6,4 +6,3 @@
   # TODO Decide where vars should go.
   roles:
     - common
-    - cdelta
