@@ -9,7 +9,7 @@ phases:
       - ./packer validate packer_cis.json
   build:
     commands:
-      - ./packer build -color=false packer_cis.json | tee build.log
+      - ./packer build -debug -color=false packer_cis.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
