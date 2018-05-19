@@ -6,7 +6,7 @@
     "ami_name": "Test-AMZN-{{isotime \"02-Jan-06 03_04_05\"}}"
   },
   "builders": [{
-    "name": "AWS AMI Builder - CIS",
+    "name": "AWS AMI Builder - Basic",
     "type": "amazon-ebs",
     "region": "{{user `aws_region`}}",
     "source_ami_filter": {
@@ -35,8 +35,8 @@
     "snapshot_tags": {
       "Name": "{{user `ami_name`}}"
     },
-    "ami_description": "Amazon Linux CIS with Cloudwatch Logs agent",
     "associate_public_ip_address": "true",
+    "ami_description": "Amazon Linux Basic",
     "vpc_id": "{{user `vpc`}}",
     "subnet_id": "{{user `subnet`}}"
   }],
