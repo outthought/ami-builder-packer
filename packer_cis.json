@@ -35,8 +35,8 @@
     "snapshot_tags": {
       "Name": "{{user `ami_name`}}"
     },
-    "associate_public_ip_address": "true",
     "ami_description": "Amazon Linux Basic",
+    "associate_public_ip_address": "false",
     "vpc_id": "{{user `vpc`}}",
     "subnet_id": "{{user `subnet`}}"
   }],
