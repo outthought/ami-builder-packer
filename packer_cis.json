@@ -53,7 +53,7 @@
         "role_paths": [
             "ansible/roles/common"
         ],
-        "playbook_dir": "ansible",
+        "playbook_dir": "ansible"
     },
     {
       "type": "shell",
