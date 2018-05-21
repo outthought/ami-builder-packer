@@ -23,9 +23,14 @@ Parameters:
         Type: String
         Description: Email to receive new AMI ID created by AMI Builder
 
+    OAuthKeyName:
+        Type: AWS::SSM::Parameter::Name
+        Description: SSM Parameter key name that stores GitHub OAuthToken.
+        Default: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
+
     OAuthToken:
         Type: AWS::SSM::Parameter::Value<String>
-        Description: SSM Parameter key name with GitHub OAuthToken to enable CodeBuild to talk to Github.
+        Description: GitHub OAuthToken value
         Default: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
         NoEcho: true
 
@@ -48,7 +53,7 @@ Metadata:
           default: "Packer - CodeBuild environment"
         Parameters: 
           - CodeBuildEnvironment
-          - OAuthToken
+          - OAuthKeyName
       - 
         Label: 
           default: "AMI Builder - Notifications"
@@ -65,7 +70,7 @@ Metadata:
         default: "Should I use a different Docker Image?"
       NotificationEmailAddress:
         default: "Who should I notify upon completion?"
-      OAuthToken:
+      OAuthKeyName:
         default: "Which OAuth Token for GitHub should I use?"
 
 
@@ -142,7 +147,7 @@ Resources:
                     Value: !Ref BuilderPublicSubnet
                     Type: PLAINTEXT
                   - Name: GALAXY_TOKEN
-                    Value: !Ref OAuthToken
+                    Value: !Ref OAuthKeyName
                     Type: PARAMETER_STORE
             ServiceRole: !GetAtt CodeBuildServiceRole.Arn
             Source: 
