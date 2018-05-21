@@ -134,12 +134,16 @@ Resources:
                 EnvironmentVariables:
                   - Name: BUILD_OUTPUT_BUCKET
                     Value: !Ref BuildArtifactsBucket
+                    Type: PLAINTEXT
                   - Name: BUILD_VPC_ID
                     Value: !Ref BuilderVPC
+                    Type: PLAINTEXT
                   - Name: BUILD_SUBNET_ID
                     Value: !Ref BuilderPublicSubnet
+                    Type: PLAINTEXT
                   - Name: GALAXY_TOKEN
                     Value: !Ref OAuthToken
+                    Type: PARAMETER_STORE
             ServiceRole: !GetAtt CodeBuildServiceRole.Arn
             Source: 
                 Type: CODEPIPELINE
