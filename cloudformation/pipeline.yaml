@@ -244,7 +244,7 @@ Resources:
               - 
                 Endpoint: !Ref NotificationEmailAddress
                 Protocol: "email"
-            TopicName: "AmiBuilder-Notify"
+            TopicName: !Sub '${ServiceName}-Notify'
 
     AmiBuilderNotificationTopicPolicy:
       Type: AWS::SNS::TopicPolicy
