@@ -138,6 +138,8 @@ Resources:
                     Value: !Ref BuilderVPC
                   - Name: BUILD_SUBNET_ID
                     Value: !Ref BuilderPublicSubnet
+                  - Name: GALAXY_TOKEN
+                    Value: !Ref OAuthToken
             ServiceRole: !GetAtt CodeBuildServiceRole.Arn
             Source: 
                 Type: CODEPIPELINE
