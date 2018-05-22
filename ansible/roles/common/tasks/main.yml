@@ -1,0 +1,274 @@
+# Common provision.
+# Tasks below are organized loosely by function.
+
+---
+
+- name: 'debug msg: variables ansible_... os_family, distribution, and major_version.'
+  debug:
+    msg: |
+      ansible_os_family = {{ ansible_os_family }}
+      ansible_distribution = {{ ansible_distribution }}
+      ansible_distribution_major_version = {{ ansible_distribution_major_version }}
+    verbosity: 2
+
+- name: 'gather os specific variables'
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+
+- name: 'debug msg: about packages.'
+  debug:
+    msg: >-
+      Dynamically include variable "list_of_packages" based upon ansible_os_family.
+      Variable list_of_packages dynamically loads above with include_vars and with_first_found.
+    verbosity: 2
+
+- name: 'When ansible_os_family is Debian, run the equivalent of apt update.'
+  apt:
+    # update_cache: 'yes'
+    cache_valid_time: 60  # seconds
+  when: 'ansible_os_family == "Debian"'
+
+- name: 'Assert packages.'
+  package:
+    name: "{{ list_of_packages }}"
+    state: 'present'
+
+- name: 'debug msg: about local user "ansible"'
+  debug:
+    msg: >-
+      Provision the ansible user, group, and ssh keys:
+      - local user and group ansible,
+      - sudoers access for ansible,
+      - authorized_keys for ssh propogated with GitHub user sps-ansible, and
+      - cron job to update authorized_keys.
+    verbosity: 2
+
+- name: 'Assert ansible group'
+  group:
+    name: 'ansible'
+    gid: '285'
+    system: 'yes'
+    state: 'present'
+
+- name: 'Assert ansible user'
+  user:
+    name: 'ansible'
+    uid: '285'
+    group: 'ansible'
+    system: 'yes'
+    shell: '/bin/bash'
+    createhome: 'yes'
+    home: '/home/ansible'
+    state: 'present'
+
+- name: 'Assert authorized_keys from GitHub user sps-ansible'
+  authorized_key:
+    key: 'https://github.com/sps-ansible.keys'
+    manage_dir: 'yes'
+    state: 'present'
+    user: 'ansible'
+
+- name: 'Assert cron job at reboot, to add public keys from GitHub user sps-ansible to authorized_keys'
+  cron:
+    name: 'Retrieve ansible public keys on reboot'
+    # This job only writes the file if a good http status is returned (due to -f)
+    job: '/usr/bin/curl --silent -f -o /home/ansible/.ssh/authorized_keys https://github.com/sps-ansible.keys'
+    special_time: 'reboot'
+    user: 'ansible'
+
+- name: 'Assert cron job at midnight, to add public keys from GitHub user sps-ansible to authorized_keys'
+  cron:
+    name: 'Retrieve ansible public keys daily'
+    # This job only writes the file if a good http status is returned (due to -f)
+    job: '/usr/bin/curl --silent -f -o /home/ansible/.ssh/authorized_keys https://github.com/sps-ansible.keys'
+    special_time: 'daily'
+    user: 'ansible'
+
+- name: 'Assert /etc/sudoers.d directory'
+  file:
+    path: '/etc/sudoers.d'
+    state: 'directory'
+    mode: '0750'
+    owner: 'root'
+    group: 'root'
+
+- name: 'Assert sudoers file for ansible'
+  copy:
+    content: 'ansible ALL=(ALL) NOPASSWD:ALL'
+    dest: '/etc/sudoers.d/sps_ansible'
+    mode: '0440'
+    owner: 'root'
+    group: 'root'
+
+- name: 'debug msg: about tasks to provision sudoers.'
+  debug:
+    msg: >-
+      Configure sudoers.d with files enabling sudo for select groups.
+      Declare variable "sudoers" with select group.
+    verbosity: 2
+
+- name: 'Assert sudoers reads drop-in files with the line "#includedir /etc/sudoers.d"'
+  lineinfile:
+    path: '/etc/sudoers'
+    # (The # here does not mean a comment)
+    line: "#includedir /etc/sudoers.d"
+    state: 'present'
+    insertafter: 'EOF'
+
+# TODO Why is the path modification necessary?
+- name: 'Assert /etc/sudoers secure_path line in contains "/usr/local/bin"'
+  lineinfile:
+    state: 'present'
+    dest: '/etc/sudoers'
+    regexp: '^Defaults    secure_path'
+    line: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
+
+# Declare variable "sudoers" with values to match sps_sudo.j2 template.
+- name: 'Assert custom sudoers file sps_sudo in /etc/sudoers.d'
+  template:
+    mode: '0440'
+    owner: 'root'
+    group: 'root'
+    src: 'sudoers.j2'
+    dest: '/etc/sudoers.d/{{ sudo_file_name }}'
+    validate: 'visudo -c -f %s'
+  when: sudoers
+
+- name: 'debug msg: about access.'
+  debug:
+    msg: >-
+      Configure access.conf to allow certain groups access.
+      Configure sshd for password authentication.
+      Enable select group of people to be able to login.
+      Variables to use for the templated access.conf file:
+        - access_groups
+        - access_users
+    verbosity: 2
+      
+- name: 'Assert state of /etc/security/access.conf to allow lists of access_users or access_groups to login'
+  template:
+    src: 'access.conf.j2'
+    dest: '/etc/security/access.conf'
+
+# Enable login with a password.
+- name: 'Assert /etc/ssh/sshd_config allows password auth with line "PasswordAuthentication yes"'
+  lineinfile:
+    dest: '/etc/ssh/sshd_config'
+    line: 'PasswordAuthentication yes'
+    regexp: '^(#|)PasswordAuthentication\ .*'
+  notify: 'restart ssh'
+
+- name: 'Install ssh banner for legal reasons'
+  copy:
+    src: 'ssh_issue'
+    dest: '/etc/ssh/issue'
+  notify: 'restart ssh'
+
+- name: 'Update sshd_config with banner'
+  lineinfile:
+    dest: '/etc/ssh/sshd_config'
+    line: 'Banner /etc/ssh/issue'
+    regexp: '^(#|)Banner\ .*'
+  notify: 'restart ssh'
+
+- name: 'debug msg: about sssd, openssl certs, and pam, to talk to AD.'
+  debug:
+    msg: >-
+      Configure sssd to talk to Active Directory.
+      Uses ldap provider for id and auth (with StartTLS for encryption).
+      Hinges on TLS CA certs on the server and the same on the client.
+      Configures pam_sss. Configures oddjobmkhomedir.
+      Server certificates on the client, enable ldap id and auth to succeed against the CA cert on AD.
+    verbosity: 2
+
+- name: 'Assert cacerts directory'
+  file:
+    path: "{{ sssd_ldap_tls_cacertdir }}"
+    state: 'directory'
+
+- name: 'Copy SPS Internal CA server certificate'
+  copy:
+    src: 'SPS_Internal_CA.crt'
+    dest: "{{ sssd_ldap_tls_cacertdir }}"
+
+- name: 'debug msg: about sssd configuration'
+  debug:
+    msg: >-
+      The remaining tasks install and configure sssd and the various components to allow AD users to login.
+    verbosity: 2
+
+- name: 'Assert directory /etc/sssd'
+  file:
+    path: '/etc/sssd'
+    state: 'directory'
+
+- name: 'sssd config'
+  template:
+    src: 'sssd.conf.j2'
+    dest: '/etc/sssd/sssd.conf'
+    mode: '0600'
+    owner: 'root'
+    group: 'root'
+  notify: 'restart sssd'
+
+- name: 'Assert enable and start of sssd'
+  service:
+    name: 'sssd'
+    state: 'started'
+    enabled: 'yes'
+
+# PAM sssd files need to be in place for ssh.
+- name: 'Assert state of pam.d system-auth to add sssd to pam'
+  copy:
+    src: 'system-auth'
+    dest: '/etc/pam.d/system-auth'
+
+- name: 'Assert state of pam.d password-auth to add sssd to pam'
+  copy:
+    # Contents of system-auth and password-auth are identical.
+    src: 'system-auth'
+    dest: '/etc/pam.d/password-auth'
+
+- name: 'Assert state of pam.d postlogin'
+  copy:
+    src: 'postlogin'
+    dest: '/etc/pam.d/postlogin'
+
+- name: 'Fix pam.d home directory creation'
+  lineinfile:
+    dest: '/etc/pam.d/common-session'
+    insertafter: '^session\s+required\s+pam_unix.so'
+    line: 'session    required    pam_mkhomedir.so skel=/etc/skel/ umask=0022'
+    state: 'present'
+  when:
+    - 'ansible_distribution == "Ubuntu"'
+    - 'ansible_distribution_major_version == "16"'
+
+- name: 'Assert enable and start of oddjobd for home dir creation on login'
+  service:
+    name: 'oddjobd'
+    state: 'started'
+    enabled: 'yes'
+  when: 'ansible_os_family == "RedHat"'
+
+# TODO Timezone should be set to UTC for users in different timezones.
+- name: 'Set the linux timezone to America/Chicago.'
+  timezone:
+    name: 'America/Chicago'
+
+- name: 'debug msg: about cloud-init.'
+  debug:
+    msg: "Configure cloud.cfg for default cloud-init configuration keys."
+    verbosity: 2
+
+- name: 'Place cloud-init file.'
+  copy:
+    src: '99_SPS.cfg'
+    dest: '/etc/cloud/cloud.cfg.d/99_SPS.cfg'
+
+- name: 'Install Heat CloudFormation Tools (pip)'
+  pip:
+    name: 'heat_cfntools'
+    state: 'latest'
+    executable: '/usr/bin/pip'

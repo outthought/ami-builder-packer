@@ -1,0 +1,32 @@
+# Package list for RedHat.
+
+---
+
+sssd_ldap_tls_cacertdir: '/etc/openldap/cacerts'
+list_of_packages:
+  - 'crontabs'
+  - 'gcc '  # Needed to build pip ansible
+  - 'htop'
+  - 'iotop'
+  - 'libffi-devel '  # Needed to build pip ansible
+  - 'libselinux-python'
+  - 'lsof'
+  - 'nano'
+  - 'oddjob-mkhomedir'
+  - 'openssl'
+  - 'openssl-devel '  # Needed to build pip ansible
+  - 'parted'
+  - 'python'
+  - 'python-devel'
+  - 'python-pip'
+  - 'redhat-lsb-core '  # Used for Distro identification
+  - 'screen'
+  - 'sssd'
+  - 'sysstat'
+  - 'tcpdump'
+  - 'telnet'
+  - 'tmux'
+  - 'unzip'
+  - 'vim-minimal'
+  - 'wget'
+  - 'zip'

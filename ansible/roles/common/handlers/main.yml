@@ -1,0 +1,21 @@
+# Service restart handlers.
+
+---
+
+- name: 'restart sssd'
+  service:
+    name: 'sssd'
+    state: 'restarted'
+  become: true
+
+- name: 'restart ssh'
+  service:
+    name: 'sshd'
+    state: 'restarted'
+  become: true
+
+- name: 'restart snmpd'
+  service:
+    name: 'snmpd'
+    state: 'restarted'
+  become: true

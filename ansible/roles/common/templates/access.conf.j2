@@ -1,0 +1,12 @@
+### ANSIBLE MANAGED!!! ####
++ : ec2-user : ALL
++ : root : ALL
+{% if access_users is defined %}
++ : {{ access_users|join(" ") }} : ALL
+{% endif %}
+{% if access_groups is defined %}
+{% for group in access_groups %}
++ : ({{ group }}) : ALL
+{% endfor %}
+{% endif %}
+- : ALL : ALL EXCEPT LOCAL

@@ -1,0 +1,14 @@
+# snmpd command line options
+{% if ansible_distribution_major_version >= '6' %}
+{% if snmp_confs %}
+OPTIONS="-LS0-6d -Lf /dev/null -p /var/run/snmpd.pid -c {{ snmp_confs | join(',') }}"
+{% else %}
+# OPTIONS="-LS0-6d -Lf /dev/null -p /var/run/snmpd.pid"
+{% endif %}
+{% else %}
+{% if snmp_confs %}
+OPTIONS="-Lsd -Lf /dev/null -p /var/run/snmpd.pid -a -c {{ snmp_confs | join(',') }}"
+{% else %}
+# OPTIONS="-Lsd -Lf /dev/null -p /var/run/snmpd.pid -a"
+{% endif %}
+{% endif %}
