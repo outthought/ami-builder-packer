@@ -37,7 +37,7 @@ data "aws_subnet" "selected" {
 resource "aws_cloudformation_stack" "amibu" {
   name          = "amibu"
   capabilities  = ["CAPABILITY_IAM"]
-  template_body = "${file("cloudformation/pipeline.yaml")}"
+  template_body = "${file("pipeline.yaml")}"
 
   parameters {
     BuilderVPC               = "${data.aws_subnet.selected.vpc_id}"
