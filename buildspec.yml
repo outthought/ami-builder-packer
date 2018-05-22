@@ -2,6 +2,7 @@ version: 0.2
 
 env:
   parameter-store:
+    # Put this secret into a secure variable.
     BIND_PASS: /techops/ansible_vars/common/bind_pass
 
 phases:
@@ -13,7 +14,12 @@ phases:
       - ./packer validate packer_cis.json
   build:
     commands:
-      # packer calls ansible
+      # If only there was a better way...
+      # Packer calls ansible with a packer-to-ansible passthrough variable. See packer JSON template for how it is used;
+      # Declare it as a packer variable,
+      # variables: { "bind_pass": "", ...
+      # ...and then pass it like so:
+      #         "extra_arguments": [ "--extra-vars \"sssd_ldap_default_authtok={{user `bind_pass`}}\"" ]
       - ./packer build -color=false -var bind_pass=$BIND_PASS packer_cis.json | tee build.log
   post_build:
     commands:
