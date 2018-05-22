@@ -46,3 +46,11 @@ resource "aws_cloudformation_stack" "amibu" {
     ServiceName              = "${var.ServiceName}"
   }
 }
+
+output cfn_outputs {
+  value = "${aws_cloudformation_stack.amibu.outputs}"
+}
+
+output cfn_id {
+  value = "${aws_cloudformation_stack.amibu.id}"
+}
