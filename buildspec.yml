@@ -1,5 +1,12 @@
 version: 0.2
 
+env:
+  parameter-store:
+    # Ansible --extra-vars accepts yaml directly.
+    # ansible-playbook release.yml --extra-vars "@some_file.yaml"
+    # TODO Put parameter with yaml for the below.
+    ANSIBLE_VARS: /techops/ansible_vars/common
+
 phases:
   pre_build:
     commands:
@@ -9,7 +16,8 @@ phases:
       - ./packer validate packer_cis.json
   build:
     commands:
-      - ./packer build -color=false packer_cis.json | tee build.log
+      # packer calls ansible
+      - ./packer build -color=false packer_cis.json --extra-vars $ANSIBLE_VARS | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
