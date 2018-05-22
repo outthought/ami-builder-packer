@@ -1,3 +1,7 @@
+.terraform*
+terraform.tfvars
+terraform.tfstate.*
+
 # Created by https://www.gitignore.io/api/osx,linux,windows
 
 ### Linux ###

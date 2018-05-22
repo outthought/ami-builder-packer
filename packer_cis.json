@@ -50,7 +50,10 @@
     {
         "type": "ansible-local",
         "playbook_file": "ansible/playbook.yaml",
-        "playbook_dir": "ansible"
+        "playbook_dir": "ansible",
+        "role_paths": [
+            "ansible/roles/common"
+        ]
     },
     {
       "type": "shell",

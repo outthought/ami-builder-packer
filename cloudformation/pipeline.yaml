@@ -23,14 +23,9 @@ Parameters:
         Type: String
         Description: Email to receive new AMI ID created by AMI Builder
 
-    OAuthKeyName:
-        Type: AWS::SSM::Parameter::Name
-        Description: SSM Parameter key name that stores GitHub OAuthToken.
-        Default: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
-
     OAuthToken:
         Type: AWS::SSM::Parameter::Value<String>
-        Description: GitHub OAuthToken value
+        Description: GitHub OAuthToken key stored in SSM Parameter Store
         Default: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
         NoEcho: true
 
@@ -143,9 +138,6 @@ Resources:
                     Value: !Ref BuilderVPC
                   - Name: BUILD_SUBNET_ID
                     Value: !Ref BuilderPublicSubnet
-                  - Name: GALAXY_TOKEN
-                    Value: !Ref OAuthKeyName
-                    Type: PARAMETER_STORE
             ServiceRole: !GetAtt CodeBuildServiceRole.Arn
             Source: 
                 Type: CODEPIPELINE
