@@ -5,3 +5,35 @@
   become: yes           # majority of CIS tasks require root
   roles:
     - common
+  vars:
+    sssd_domains: 'spscommerce.com'
+    sssd_ldap_default_bind_dn: 'cloudbind'
+    sssd_ldap_default_authtok: ''
+    sssd_ldap_search_base: 'dc=spscommerce,dc=com'
+    sssd_ldap_port: 389
+    sssd_ldap_servers:
+      - 'adcspsc13.spscommerce.com'
+      - 'adcspsc14.spscommerce.com'
+    sssd_enumerate: false
+
+    sudoers:
+      - userorgroup: 'unix_iteng'
+        nopassword: false
+      - userorgroup: 'unix_cloudeng'
+        nopassword: false
+      - userorgroup: 'unix_sysopst2'
+        nopassword: false
+    sudo_file_name: 'sps_default'
+
+    access_groups:
+      - 'unix_iteng'
+      - 'unix_cloudeng'
+      - 'unix_sysopst2'
+    access_users:
+      - 'ansible'
+
+    snmppollers:
+      - 'lmsgstp25'
+      - 'stoadfait1'
+    snmpextenders:
+    snmpconfs: []
