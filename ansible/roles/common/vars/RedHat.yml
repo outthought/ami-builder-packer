@@ -11,7 +11,6 @@ list_of_packages:
   - 'libffi-devel '  # Needed to build pip ansible
   - 'libselinux-python'
   - 'lsof'
-  - 'nano'
   - 'oddjob-mkhomedir'
   - 'openssl'
   - 'openssl-devel '  # Needed to build pip ansible
