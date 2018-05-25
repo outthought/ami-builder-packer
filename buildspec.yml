@@ -7,7 +7,7 @@ env:
     PACKER_NO_COLOR: 1
   parameter-store:
     # Put this secret into a secure variable.
-    BIND_PASS: /techops/ansible_vars/common/bind_pass
+    GROUP_VARS: /techops/ansible_vars/common/group_vars
 
 phases:
   install:
@@ -18,16 +18,11 @@ phases:
     commands:
       - echo "Validating Packer template"
       - ./packer validate packer_cis.json
+      - echo "Place ansible parameters into group_vars/all"
+      - cat $GROUP_VARS > ansible/group_vars/all
   build:
     commands:
-      # If only there was a better way...
-      # Packer calls ansible with a packer-to-ansible passthrough variable. See packer JSON template for how it is used;
-      # Declare it as a packer variable,
-      # variables: { "bind_pass": "", ...
-      # ...and then pass it like so:
-      #         "extra_arguments": [ "--extra-vars \"sssd_ldap_default_authtok={{user `bind_pass`}}\"" ]
-      - ./packer build -color=false -var bind_pass=$BIND_PASS packer_cis.json | tee build.log
-      - ./packer build -var bind_pass=$BIND_PASS packer_cis.json | tee build.log
+      - ./packer build packer_cis.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
