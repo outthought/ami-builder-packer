@@ -20,7 +20,7 @@ phases:
       - ./packer validate packer_cis.json
       - echo "Place ansible parameters into group_vars/all"
       - mkdir -p ansible/group_vars
-      - echo "$GROUP_VARS" > ansible/group_vars/all
+      - printf '%s\n' $GROUP_VARS > ansible/group_vars/all
   build:
     commands:
       - ./packer build packer_cis.json | tee build.log
