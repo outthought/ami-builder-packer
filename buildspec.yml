@@ -19,6 +19,7 @@ phases:
       - echo "Validating Packer template"
       - ./packer validate packer_cis.json
       - echo "Place ansible parameters into group_vars/all"
+      - mkdir -p ansible/group_vars
       - cat $GROUP_VARS > ansible/group_vars/all
   build:
     commands:
