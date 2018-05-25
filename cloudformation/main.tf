@@ -1,7 +1,14 @@
 # Examine a VPC and create cloudformation stack from its parameters.
 
-variable NotificationEmailAddress {}
-variable ServiceName {}
+variable NotificationEmailAddress {
+  description = "The email address for SNS notifications."
+  type        = "string"
+}
+
+variable ServiceName {
+  description = "The name of the CloudFormation Stack and it's resources."
+  type        = "string"
+}
 
 # If the target vpc is from a cloudformation stack, then we may use the aws_cloudformation_stack data source.
 
