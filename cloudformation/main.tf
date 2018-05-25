@@ -35,7 +35,7 @@ data "aws_subnet" "selected" {
 }
 
 resource "aws_cloudformation_stack" "amibu" {
-  name          = "amibu"
+  name          = "${var.ServiceName}"
   capabilities  = ["CAPABILITY_IAM"]
   template_body = "${file("pipeline.yaml")}"
 
