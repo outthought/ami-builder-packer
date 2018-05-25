@@ -11,8 +11,8 @@ variable ServiceName {}
 #   name = "${var.cfn_vpc}"
 # }
 
-# resource "aws_cloudformation_stack" "amibu" {
-#   name         = "amibu"
+# resource "aws_cloudformation_stack" "amibuilder" {
+#   name         = "${var.ServiceName}"
 #   template_url = "./cloudformation/pipeline.json"
 
 #   parameters {
@@ -34,7 +34,7 @@ data "aws_subnet" "selected" {
   id = "${var.subnet_id}"
 }
 
-resource "aws_cloudformation_stack" "amibu" {
+resource "aws_cloudformation_stack" "amibuilder" {
   name          = "${var.ServiceName}"
   capabilities  = ["CAPABILITY_IAM"]
   template_body = "${file("pipeline.yaml")}"
@@ -48,9 +48,9 @@ resource "aws_cloudformation_stack" "amibu" {
 }
 
 output cfn_outputs {
-  value = "${aws_cloudformation_stack.amibu.outputs}"
+  value = "${aws_cloudformation_stack.amibuilder.outputs}"
 }
 
 output cfn_id {
-  value = "${aws_cloudformation_stack.amibu.id}"
+  value = "${aws_cloudformation_stack.amibuilder.id}"
 }
