@@ -10,10 +10,12 @@ env:
     BIND_PASS: /techops/ansible_vars/common/bind_pass
 
 phases:
-  pre_build:
+  install:
     commands:
       - echo "Installing Packer"
       - curl -o packer.zip https://releases.hashicorp.com/packer/1.2.2/packer_1.2.2_linux_amd64.zip && unzip packer.zip
+  pre_build:
+    commands:
       - echo "Validating Packer template"
       - ./packer validate packer_cis.json
   build:
