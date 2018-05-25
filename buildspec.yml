@@ -17,7 +17,7 @@ phases:
   pre_build:
     commands:
       - echo "Validating Packer template"
-      - ./packer validate packer_cis.json
+      - ./packer validate packer.json
       - echo "Place ansible parameters into group_vars/all"
       - mkdir -p ansible/group_vars
       # Both "echo" and "printf" send the contents of the parameter to the redirect.
@@ -26,7 +26,7 @@ phases:
       # - printf '%s\n' $GROUP_VARS > ansible/group_vars/all
   build:
     commands:
-      - ./packer build packer_cis.json | tee build.log
+      - ./packer build packer.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt

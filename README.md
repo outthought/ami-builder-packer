@@ -16,7 +16,7 @@ orchestrate the entire process.
 ├── buildspec.yml                           <-- CodeBuild spec 
 ├── cloudformation                          <-- Cloudformation to create entire pipeline
 │   └── pipeline.yaml
-├── packer_cis.json                         <-- Packer template for Pipeline
+├── packer.json                         <-- Packer template for Pipeline
 ```
 
 
