@@ -3,7 +3,6 @@
     "vpc": "{{env `BUILD_VPC_ID`}}",
     "subnet": "{{env `BUILD_SUBNET_ID`}}",
     "aws_region": "{{env `AWS_REGION`}}",
-    "bind_pass": "",
     "ami_name": "Test-AMZN-{{isotime \"02-Jan-06 03_04_05\"}}"
   },
   "builders": [{
@@ -50,10 +49,8 @@
     },
     {
         "type": "ansible-local",
-        "command": "PYTHONUNBUFFERED=1 ansible-playbook",
         "playbook_file": "ansible/playbook.yaml",
         "playbook_dir": "ansible",
-        "extra_arguments": [ "--extra-vars \"sssd_ldap_default_authtok={{user `bind_pass`}}\"" ],
         "role_paths": [
             "ansible/roles/common"
         ]

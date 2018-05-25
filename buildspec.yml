@@ -1,6 +1,8 @@
 version: 0.2
 
 env:
+  variables:
+    PACKER_NO_COLOR: 1
   parameter-store:
     # Put this secret into a secure variable.
     BIND_PASS: /techops/ansible_vars/common/bind_pass
@@ -21,6 +23,7 @@ phases:
       # ...and then pass it like so:
       #         "extra_arguments": [ "--extra-vars \"sssd_ldap_default_authtok={{user `bind_pass`}}\"" ]
       - ./packer build -color=false -var bind_pass=$BIND_PASS packer_cis.json | tee build.log
+      - ./packer build -var bind_pass=$BIND_PASS packer_cis.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
