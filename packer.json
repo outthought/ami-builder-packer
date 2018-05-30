@@ -55,7 +55,7 @@
         "most_recent": true
         },
     "instance_type": "t2.micro",
-    "ssh_username": "ec2-user",
+    "ssh_username": "ubuntu",
     "ami_name": "{{user `ami_name` | clean_ami_name}}",
     "tags": {
       "Name": "{{user `ami_name`}}"
