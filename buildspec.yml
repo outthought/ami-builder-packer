@@ -15,8 +15,8 @@ phases:
     commands:
       - echo "Installing Packer"
       - curl -o packer.zip https://releases.hashicorp.com/packer/1.2.4/packer_1.2.4_linux_amd64.zip && unzip packer.zip
-      - apt-get update
-      - apt-get install -y --no-install-recommends git
+      - sudo apt-get update
+      - sudo apt-get install -y --no-install-recommends git
   pre_build:
     commands:
       - echo "Validating Packer template"
