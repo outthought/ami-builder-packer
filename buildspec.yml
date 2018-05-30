@@ -8,7 +8,7 @@ env:
   parameter-store:
     # Put this secret into a secure variable.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
-    GALAXY_TOKEN: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
+    ANSIBLE_GALAXY_TOKEN: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
 
 phases:
   install:
