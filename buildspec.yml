@@ -5,6 +5,7 @@ env:
     # Disable call to checkpoint.hashicorp.com to look for new versions of Packer.
     CHECKPOINT_DISABLE: 1
     PACKER_NO_COLOR: 1
+    PACKER_LOG: 1
   parameter-store:
     # Put this secret into a secure variable.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
@@ -25,7 +26,7 @@ phases:
       - echo "$GROUP_VARS" > ansible/group_vars/all
   build:
     commands:
-      - ./packer build packer.json | tee build.log
+      - ./packer build -debug packer.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
