@@ -26,6 +26,7 @@ phases:
       - echo "$GROUP_VARS" > ansible/group_vars/all
       # - printf '%s\n' $GROUP_VARS > ansible/group_vars/all
       - git config --global credential.helper "cache --timeout 360"
+      - git config --global github.token $GITHUB_TOKEN
   build:
     commands:
       - ./packer build packer.json | tee build.log
