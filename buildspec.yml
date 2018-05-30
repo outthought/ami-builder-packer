@@ -25,6 +25,8 @@ phases:
       # The file contains yaml, like most ansible vars files.
       - echo "$GROUP_VARS" > ansible/group_vars/all
       # - printf '%s\n' $GROUP_VARS > ansible/group_vars/all
+      - which git
+      - which ansible-galaxy
   build:
     commands:
       - ./packer build packer.json | tee build.log
