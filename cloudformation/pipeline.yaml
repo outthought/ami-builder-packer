@@ -8,7 +8,7 @@ Parameters:
 
     CodeBuildEnvironment:
         Type: String
-        Default: "eb-python-2.7-amazonlinux-64:2.1.6"
+        Default: "eb-python-2.7-amazonlinux-64:2.3.2"
         Description: Docker image to use for CodeBuild container - Use http://amzn.to/2mjCI91 for reference
 
     BuilderVPC:
