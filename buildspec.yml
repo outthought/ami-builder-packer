@@ -28,7 +28,7 @@ phases:
       - echo "$GROUP_VARS" > ansible/group_vars/all
       # - printf '%s\n' $GROUP_VARS > ansible/group_vars/all
       - git config --global credential.helper "cache --timeout 360"
-      - git pull https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-cloud-init
+      - git pull https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-cloud-init.git
   build:
     commands:
       - ./packer build packer.json | tee build.log
