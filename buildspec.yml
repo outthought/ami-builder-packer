@@ -8,13 +8,15 @@ env:
   parameter-store:
     # Put this secret into a secure variable.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
-    ANSIBLE_GALAXY_TOKEN: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
+    GITHUB_TOKEN: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
 
 phases:
   install:
     commands:
       - echo "Installing Packer"
       - curl -o packer.zip https://releases.hashicorp.com/packer/1.2.4/packer_1.2.4_linux_amd64.zip && unzip packer.zip
+      - apt-get update
+      - apt-get install -y --no-install-recommends git
   pre_build:
     commands:
       - echo "Validating Packer template"
@@ -25,8 +27,8 @@ phases:
       # The file contains yaml, like most ansible vars files.
       - echo "$GROUP_VARS" > ansible/group_vars/all
       # - printf '%s\n' $GROUP_VARS > ansible/group_vars/all
-      - which git
-      - which ansible-galaxy
+      - git config --global credential.helper "cache --timeout 360"
+      - git config --global github.user $GITHUB_TOKEN
   build:
     commands:
       - ./packer build packer.json | tee build.log
