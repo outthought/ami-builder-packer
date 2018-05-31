@@ -10,7 +10,7 @@
         msg: "ansible_distribution is {{ ansible_distribution }}"
         verbosity: 2
 
-- hosts: os_amazon
+- hosts: os_Amazon
   gather_facts: False
   tasks:
     - set_fact:
