@@ -5,6 +5,7 @@ env:
     # Disable call to checkpoint.hashicorp.com to look for new versions of Packer.
     CHECKPOINT_DISABLE: 1
     PACKER_NO_COLOR: 1
+    ANSIBLE_STDOUT_CALLBACK: debug
   parameter-store:
     # Put this secret into a secure variable.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
