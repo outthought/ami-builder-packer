@@ -6,7 +6,7 @@ env:
     CHECKPOINT_DISABLE: 1
     PACKER_NO_COLOR: 1
     PACKER_LOG: 1
-    USER: "Chuck"
+    USER: "ec2-user"
   parameter-store:
     # Put this secret into a secure variable.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
@@ -28,7 +28,7 @@ phases:
       - echo "$GROUP_VARS" > ansible/group_vars/all
   build:
     commands:
-      - ./packer build -debug packer.json | tee build.log
+      - sudo -u $USER ./packer build -debug packer.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
