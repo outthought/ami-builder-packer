@@ -1,6 +1,0 @@
-# {{ ansible_managed }}
-
-{% for item in sudoers %}
-%{{ item.userorgroup }} ALL=({% if item.as_user is defined %}{{item.as_user}}{% else %}ALL{% endif %}) {{"NOPASSWD:" if item.nopassword else ""}} {% if item.cmds is defined %}{% for commands in item.cmds %}{{commands}}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}ALL{% endif %}
-
-{% endfor %}

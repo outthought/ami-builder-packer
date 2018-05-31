@@ -25,11 +25,18 @@ phases:
       - echo "Place ansible parameters into group_vars/all"
       - mkdir -p ansible/group_vars
       - echo "$GROUP_VARS" > ansible/group_vars/all
-      - echo "Configure git for ansible-galaxy role install"
-      # - Directly clone all repos here.
-      - git config --global user.name $GITHUB_TOKEN
-      - git config --global credential.helper "cache --timeout 360"
-  build:
+      - echo "Directly clone all repos for ansible roles here."
+      - cd ansible/roles
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sps-common.git --branch 0.2.7 common
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@git@github.com/SPSCommerce/ansible-role-time.git --branch 0.2.2 time
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-cloud-init.git --branch 0.0.13 cloud-init
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-authconfig.git --branch 1.3.2 authconfig
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sudo.git --branch 0.0.7 sudo
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-snmpd.git --branch 0.2.5 snmpd
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-inventory.git --branch 1.1.6 inventory
+      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-deploy-monitor.git --branch 1.2.2 deploy-monitor
+      - cd ../..
+  build:          
     commands:
       - ./packer build -debug packer.json | tee build.log
   post_build:

@@ -51,13 +51,10 @@
     {
         "type": "ansible-local",
         "command": "PYTHONUNBUFFERED=1 ansible-playbook",
-        "extra_arguments": [ "-vvvvv" ],
-        "galaxy_file": "ansible/requirements.yml",
+        "extra_arguments": [ "-vvv" ],
         "playbook_file": "ansible/playbook.yml",
         "playbook_dir": "ansible",
-        "role_paths": [
-            "ansible/roles/common"
-        ]
+        "role_paths": [ "ansible/roles" ]
     },
     {
       "type": "shell",
