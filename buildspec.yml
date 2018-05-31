@@ -4,6 +4,7 @@ env:
   variables:
     # Disable call to checkpoint.hashicorp.com to look for new versions of Packer.
     CHECKPOINT_DISABLE: 1
+    PACKER_LOG: 1
     PACKER_NO_COLOR: 1
   parameter-store:
     # Put this secret into a secure variable.
@@ -25,11 +26,12 @@ phases:
       - mkdir -p ansible/group_vars
       - echo "$GROUP_VARS" > ansible/group_vars/all
       - echo "Configure git for ansible-galaxy role install"
+      # - Directly clone all repos here.
       - git config --global user.name $GITHUB_TOKEN
       - git config --global credential.helper "cache --timeout 360"
   build:
     commands:
-      - ./packer build packer.json | tee build.log
+      - ./packer build -debug packer.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
