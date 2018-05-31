@@ -14,7 +14,7 @@
   gather_facts: False
   tasks:
     - set_fact:
-      image_group: amazonlinux
+      image_group: "amazonlinux"
 
 - hosts: localhost
   connection: local
