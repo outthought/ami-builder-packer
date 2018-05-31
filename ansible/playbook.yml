@@ -10,11 +10,11 @@
         msg: "ansible_distribution is {{ ansible_distribution }}"
         verbosity: 2
 
- - hosts: os_amazon
-   gather_facts: False
-   tasks:
+- hosts: os_amazon
+  gather_facts: False
+  tasks:
     - set_fact:
-        image_group: amazonlinux
+      image_group: amazonlinux
 
 - hosts: localhost
   connection: local
