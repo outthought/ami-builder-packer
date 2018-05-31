@@ -51,7 +51,6 @@
     {
         "type": "ansible-local",
         "command": "PYTHONUNBUFFERED=1 ansible-playbook",
-        "extra_arguments": [ "-vvv" ],
         "playbook_file": "ansible/playbook.yml",
         "playbook_dir": "ansible",
         "role_paths": [ "ansible/roles" ]

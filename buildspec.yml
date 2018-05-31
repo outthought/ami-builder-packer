@@ -4,7 +4,6 @@ env:
   variables:
     # Disable call to checkpoint.hashicorp.com to look for new versions of Packer.
     CHECKPOINT_DISABLE: 1
-    PACKER_LOG: 1
     PACKER_NO_COLOR: 1
   parameter-store:
     # Put this secret into a secure variable.
@@ -20,10 +19,10 @@ phases:
       - yum install -y git
   pre_build:
     commands:
+      - mkdir -p ansible/{group_vars,roles}
       - echo "Validating Packer template"
       - ./packer validate packer.json
       - echo "Place ansible parameters into group_vars/all"
-      - mkdir -p ansible/{group_vars,roles}
       - echo "$GROUP_VARS" > ansible/group_vars/all
       - echo "Directly clone all repos for ansible roles here."
       - cd ansible/roles
@@ -38,7 +37,7 @@ phases:
       - cd ../..
   build:          
     commands:
-      - ./packer build -debug packer.json | tee build.log
+      - ./packer build packer.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
