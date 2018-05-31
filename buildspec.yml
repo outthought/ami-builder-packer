@@ -26,6 +26,8 @@ phases:
       - echo "Place ansible parameters into group_vars/all"
       - mkdir -p ansible/group_vars
       - echo "$GROUP_VARS" > ansible/group_vars/all
+      - echo $PATH
+      - whoami
   build:
     commands:
       - sudo -u $USER ./packer build -debug packer.json | tee build.log
