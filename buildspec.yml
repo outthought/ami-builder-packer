@@ -23,7 +23,7 @@ phases:
       - echo "Validating Packer template"
       - ./packer validate packer.json
       - echo "Place ansible parameters into group_vars/all"
-      - mkdir -p ansible/group_vars
+      - mkdir -p ansible/{group_vars,roles}
       - echo "$GROUP_VARS" > ansible/group_vars/all
       - echo "Directly clone all repos for ansible roles here."
       - cd ansible/roles
