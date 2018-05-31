@@ -43,7 +43,7 @@
   "provisioners": [
     {
         "type": "shell",
-        "when": ["AmazonLinux"],
+        "only": ["AmazonLinux"],
         "inline": [
             "sudo pip install ansible"
         ]
