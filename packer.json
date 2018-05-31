@@ -5,8 +5,7 @@
     "aws_region": "{{env `AWS_REGION`}}",
     "ami_name": "Test-AMZN-{{isotime \"02-Jan-06 03_04_05\"}}"
   },
-"builders": [
-    {
+  "builders": [{
     "name": "AmazonLinux",
     "type": "amazon-ebs",
     "region": "{{user `aws_region`}}",
@@ -20,65 +19,44 @@
                    "102837901569", "013907871322", "206029621532",
                    "286198878708", "443319210888"],
         "most_recent": true
-        },
+    },
     "instance_type": "t2.micro",
     "ssh_username": "ec2-user",
     "ami_name": "{{user `ami_name` | clean_ami_name}}",
     "tags": {
       "Name": "{{user `ami_name`}}"
-        },
-    "run_tags": {
-      "Name": "{{user `ami_name`}}"
-        },
-    "run_volume_tags": {
-      "Name": "{{user `ami_name`}}"
-        },
-    "snapshot_tags": {
-      "Name": "{{user `ami_name`}}"
-        },
-    "ami_description": "Amazon Linux Basic",
-    "associate_public_ip_address": "false",
-    "vpc_id": "{{user `vpc`}}",
-    "subnet_id": "{{user `subnet`}}"
     },
-    {
-    "name": "Ubuntu",
-    "type": "amazon-ebs",
-    "region": "{{user `aws_region`}}",
-    "source_ami_filter": {
-        "filters": {
-            "virtualization-type": "hvm",
-            "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
-            "root-device-type": "ebs"
-        },
-        "owners": ["099720109477"],
-        "most_recent": true
-        },
-    "instance_type": "t2.micro",
-    "ssh_username": "ubuntu",
-    "ami_name": "{{user `ami_name` | clean_ami_name}}",
-    "tags": {
-      "Name": "{{user `ami_name`}}"
-        },
     "run_tags": {
       "Name": "{{user `ami_name`}}"
-        },
+    },
     "run_volume_tags": {
       "Name": "{{user `ami_name`}}"
-        },
+    },
     "snapshot_tags": {
       "Name": "{{user `ami_name`}}"
-        },
-    "ami_description": "Canonical, Ubuntu, 16.04 LTS",
+    },
+    "ami_description": "Amazon Linux Basic",
     "associate_public_ip_address": "false",
     "vpc_id": "{{user `vpc`}}",
     "subnet_id": "{{user `subnet`}}"
   }],
   "provisioners": [
     {
-        "type": "ansible",
+        "type": "shell",
+        "when": ["AmazonLinux"],
+        "inline": [
+            "sudo pip install ansible"
+        ]
+    },
+    {
+        "type": "ansible-local",
+        "command": "PYTHONUNBUFFERED=1 ansible-playbook",
+        "galaxy_file": "ansible/requirements.yml",
         "playbook_file": "ansible/playbook.yml",
-        "user": "me"
+        "playbook_dir": "ansible",
+        "role_paths": [
+            "ansible/roles/common"
+        ]
     },
     {
       "type": "shell",
