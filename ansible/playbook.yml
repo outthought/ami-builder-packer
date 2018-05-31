@@ -19,7 +19,7 @@
 - hosts: localhost
   connection: local
   become: yes
-  tasks:
+  pre_tasks:
     - debug:
         msg: "image_group is {{ image_group }}"
         verbosity: 2
