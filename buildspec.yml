@@ -15,6 +15,7 @@ phases:
     commands:
       - echo "Installing Packer"
       - curl -o packer.zip https://releases.hashicorp.com/packer/1.2.4/packer_1.2.4_linux_amd64.zip && unzip packer.zip
+      - pip install ansible
   pre_build:
     commands:
       - echo "Validating Packer template"
