@@ -76,27 +76,8 @@
   }],
   "provisioners": [
     {
-        "type": "shell",
-        "only": ["AmazonLinux"],
-        "inline": [
-            "sudo pip install ansible"
-        ]
-    },
-    {
-        "type": "shell",
-        "only": ["Ubuntu"],
-        "inline": [
-            "sudo apt-get update && sudo apt-get install -y ansible"
-        ]
-    },
-    {
-        "type": "ansible-local",
-        "command": "PYTHONUNBUFFERED=1 ansible-playbook",
-        "playbook_file": "ansible/playbook.yml",
-        "playbook_dir": "ansible",
-        "role_paths": [
-            "ansible/roles/common"
-        ]
+        "type": "ansible",
+        "playbook_file": "ansible/playbook.yml"
     },
     {
       "type": "shell",

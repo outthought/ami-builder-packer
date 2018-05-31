@@ -21,8 +21,6 @@ phases:
       - ./packer validate packer.json
       - echo "Place ansible parameters into group_vars/all"
       - mkdir -p ansible/group_vars
-      # Both "echo" and "printf" send the contents of the parameter to the redirect.
-      # The file contains yaml, like most ansible vars files.
       - echo "$GROUP_VARS" > ansible/group_vars/all
   build:
     commands:
