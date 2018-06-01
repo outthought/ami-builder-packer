@@ -16,6 +16,12 @@
     - set_fact:
         image_group: "amazonlinux"
 
+- hosts: os_Ubuntu
+  gather_facts: False
+  tasks:
+    - set_fact:
+        image_group: "Ubuntu"
+
 - hosts: localhost
   connection: local
   become: yes
