@@ -78,7 +78,7 @@
         "type": "shell",
         "only": ["AmazonLinux"],
         "inline": [
-            "sudo yum update",
+            "sudo yum update -y",
             "sudo pip install ansible"
         ]
     },
