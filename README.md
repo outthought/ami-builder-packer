@@ -216,3 +216,10 @@ There is a shell provisioner that enables `ansible-local` to work by installing 
 There is another shell provisioner that cleans up the instance before capture as an image.
 
 Bear in mind when working with images, that configuration is specified here as well as in Ansible.
+
+## CloudFormation and Terraform
+
+If you wish to re-deploy, or teardown and make again this entire CodePipeline, it is easy.
+Use the CloudFormation file `pipeline.yaml` in
+[cloudformation](https://github.com/SPSCommerce/ami-builder-packer/tree/development/cloudformation)
+to tear down or make a new stack. 
