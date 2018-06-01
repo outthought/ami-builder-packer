@@ -78,14 +78,17 @@
         "type": "shell",
         "only": ["AmazonLinux"],
         "inline": [
-            "pip install ansible"
+            "sudo yum update"
+            "sudo pip install ansible"
         ]
     },
     {
         "type": "shell",
         "only": ["Ubuntu"],
         "inline": [
-            "pip install ansible"
+            "sudo apt-get update && sudo apt-get -y upgrade"
+            "sudo apt-get install -y python-pip"
+            "sudo pip install ansible"
         ]
     },
     {
