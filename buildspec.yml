@@ -1,3 +1,4 @@
+# This file configures AWS CodeBuild.
 version: 0.2
 
 env:
@@ -7,8 +8,9 @@ env:
     PACKER_NO_COLOR: 1
     ANSIBLE_STDOUT_CALLBACK: debug
   parameter-store:
-    # Put this secret into a secure variable.
+    # Put secret Ansible vars into a JSON-string SSM Parameter Store SecureString.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
+    # Enable git clone with a GitHub OAuth Token fetched from SSM Parameter Store.
     GITHUB_TOKEN: /techops/cloud-engineering/account-standup/accountconfig.githuboauthtoken
 
 phases:
@@ -21,8 +23,6 @@ phases:
   pre_build:
     commands:
       - mkdir -p ansible/{group_vars,roles}
-      - echo "Validating Packer template"
-      - ./packer validate packer.json
       - echo "Place ansible parameters into group_vars/all"
       - echo "$GROUP_VARS" > ansible/group_vars/all
       - echo "Directly clone all repos for ansible roles here."
@@ -36,11 +36,16 @@ phases:
       - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-inventory.git --branch 1.1.6 inventory
       - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-deploy-monitor.git --branch 1.2.2 deploy-monitor
       - cd ../..
+      - echo "Validating Packer template"
+      - ./packer validate packer.json
   build:          
     commands:
       - ./packer build packer.json | tee build.log
   post_build:
     commands:
+      # Extended regexp grep for region, followed by ":" followed by whitespace, then "ami", then "-".
+      # The folowing interpolates or expands into the value of region ${AWS_REGION}.
+      # The following characters must be escaped with backslash: [ ";", "-" ].
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
       # Packer doesn't return non-zero status; we must do that if Packer build failed
       - test -s ami_id.txt || exit 1
