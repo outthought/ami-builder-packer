@@ -20,7 +20,7 @@
   gather_facts: False
   tasks:
     - set_fact:
-        image_group: "Ubuntu"
+        image_group: "ubuntu16"
 
 - hosts: localhost
   connection: local
