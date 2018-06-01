@@ -27,6 +27,7 @@
         image_group: "ubuntu16"
 
 - hosts: localhost
+  gather_facts: False
   connection: local
   become: yes
   pre_tasks:
