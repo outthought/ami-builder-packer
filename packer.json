@@ -3,7 +3,7 @@
     "vpc": "{{env `BUILD_VPC_ID`}}",
     "subnet": "{{env `BUILD_SUBNET_ID`}}",
     "aws_region": "{{env `AWS_REGION`}}",
-    "ami_name_ubuntu": "Test-ubuntu-{{isotime \"02-Jan-06 03_04_05\"}}"
+    "ami_name_ubuntu": "Test-ubuntu-{{isotime \"02-Jan-06 03_04_05\"}}",
     "ami_name_amzn": "Test-amzn-{{isotime \"02-Jan-06 03_04_05\"}}"
   },
   "builders": [{
