@@ -45,9 +45,6 @@ phases:
       - ./packer build packer.json | tee build.log
   post_build:
     commands:
-      # Extended regexp grep for region, followed by ":" followed by whitespace, then "ami", then "-".
-      # The folowing interpolates or expands into the value of region ${AWS_REGION}.
-      # The following characters must be escaped with backslash: [ ";", "-" ].
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
       # Packer doesn't return non-zero status; we must do that if Packer build failed
       - test -s ami_id.txt || exit 1
