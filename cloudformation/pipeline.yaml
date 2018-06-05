@@ -290,7 +290,6 @@ Resources:
               Id: "NewAMI-Notify"
               Arn: !Ref AmiBuilderNotificationTopic
 
-
 Outputs:
 
         ArtifactRepository:
