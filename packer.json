@@ -21,13 +21,6 @@
                    "286198878708", "443319210888"],
         "most_recent": true
     },
-    "ami_block_device_mappings": [
-        {
-            "volume_type": "gp2",
-            "device_name": "/dev/xvda",
-            "delete_on_termination": true
-        }
-    ],
     "instance_type": "t2.micro",
     "ssh_username": "ec2-user",
     "ami_name": "{{user `ami_name_amzn` | clean_ami_name}}",
@@ -61,13 +54,6 @@
         "owners": ["099720109477"],
         "most_recent": true
         },
-    "ami_block_device_mappings": [
-        {
-            "volume_type": "gp2",
-            "device_name": "/dev/xvda",
-            "delete_on_termination": true
-        }
-    ],
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu",
     "ami_name": "{{user `ami_name_ubuntu` | clean_ami_name}}",
