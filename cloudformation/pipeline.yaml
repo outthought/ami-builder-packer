@@ -219,7 +219,7 @@ Resources:
                         Version: 1
                       Configuration:
                         Owner: SPSCommerce
-                        Repo: ami-builder-packer
+                        Repo: ami-builder
                         Branch: development
                         OAuthToken: !Ref OAuthToken
                       OutputArtifacts:
