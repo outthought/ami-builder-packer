@@ -90,6 +90,25 @@ git push origin master
     - A) You haven't chosen a VPC Public Subnet, and therefore Packer cannot connect to the instance
     - B) There may have been a connectivity issue between Packer and EC2; retrying the build step within AWS CodePipeline should work just fine 
 
+## Parameters to CloudFormation
+
+Supply the following parameters to the CloudFormation stack.
+- BuilderPublicSubnet
+- BuilderVPC
+- NotificationEmailAddress
+- ServiceName
+
+Use a public subnet. This CodeBuild project must be deployed to a VPC with a public subnet. Pass in the ID of a public subnet to the stack.
+
+## Specify Ansible Roles
+
+1. Add to the Ansible playbook.
+2. Add source details to `buildspec.yml` or `requirements.yml`.
+
+Specify roles stored in private GitHub repos within the file `buildspec.yml`. By using `git clone` in `pre_build`, CodeBuild can access private GitHub repos.
+Public roles are specified in `ansible/requirements.yml` and are fetched within Packer by ansible galaxy (a feat not possible yet for private GitHub).
+Any roles obtained by either method, must then be added to the list of roles in `playbook.yml`.
+
 ## How to Provide Parameters to Ansible, or Explanation of Configuration By Ansible, or How to Change The Applied Configuration
 
 Here is how to pass parameters into this CodeBuild instance for Ansible and GitHub.

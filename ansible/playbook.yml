@@ -36,7 +36,8 @@
         verbosity: 2
   roles:
     - common
-    - time
+    - yatesr.timezone
+    - influxdata.chrony
     - cloud-init
     - authconfig
     - sudo
