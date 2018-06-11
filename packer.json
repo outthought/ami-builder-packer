@@ -25,7 +25,7 @@
         {
             "volume_type": "gp2",
             "device_name": "/dev/xvda",
-            "delete_on_termination": true,
+            "delete_on_termination": true
         }
     ],
     "instance_type": "t2.micro",
@@ -65,7 +65,7 @@
         {
             "volume_type": "gp2",
             "device_name": "/dev/xvda",
-            "delete_on_termination": true,
+            "delete_on_termination": true
         }
     ],
     "instance_type": "t2.micro",
