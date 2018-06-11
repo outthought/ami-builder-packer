@@ -34,6 +34,15 @@
     - debug:
         msg: "image_group is {{ image_group }}"
         verbosity: 2
+    - debug:
+        msg: "sudoers is {{ sudoers }}"
+        verbosity: 2
+    - debug:
+        msg: "access_groups is {{ access_groups }}"
+        verbosity: 2
+    - debug:
+        msg: "ldap_bind_user is {{ ldap_bind_user }}"
+        verbosity: 2
   roles:
     - common
     - yatesr.timezone
