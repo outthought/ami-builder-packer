@@ -30,7 +30,6 @@ phases:
       # Pass this in as parameters a custom requirements.yml for ansible-galxy, somehow...
       # Alternatively, build a zip and pull from S3.
       - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sps-common.git --branch 0.2.7 common
-      - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-time.git --branch 0.2.2 time
       - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-cloud-init.git --branch 0.0.13 cloud-init
       - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-authconfig.git --branch 1.3.2 authconfig
       - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sudo.git --branch 0.0.7 sudo

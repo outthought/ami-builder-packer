@@ -99,6 +99,7 @@
         "command": "PYTHONUNBUFFERED=1 ansible-playbook",
         "playbook_file": "ansible/playbook.yml",
         "extra_arguments": [ "-vvvv" ],
+        "galaxy_file": "ansible/requirements.yml",
         "playbook_dir": "ansible",
         "role_paths": [ "ansible/roles" ]
     },
