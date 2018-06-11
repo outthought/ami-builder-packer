@@ -125,6 +125,7 @@ Resources:
         Type: AWS::CodeBuild::Project
         Properties:
             Name: !Sub '${ServiceName}_build'
+            Description: Clone Ansible roles, then use Packer with amazon-ebs builders and ansible-local provisioners
             Artifacts:
                 Type: CODEPIPELINE
             Environment: 
