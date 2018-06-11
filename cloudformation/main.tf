@@ -28,7 +28,7 @@ resource "aws_cloudformation_stack" "amibuilder" {
   template_body = "${file("pipeline.yaml")}"
 
   parameters {
-    BuilderPublicSubnet      = "${element(split(",", data.aws_cloudformation_stack.cfn.outputs.internalSubnets), 2)}"
+    BuilderPublicSubnet      = "${element(split(",", data.aws_cloudformation_stack.cfn.outputs.PublicSubnets), 0)}"
     BuilderVPC               = "${data.aws_cloudformation_stack.cfn.outputs.VPC}"
     NotificationEmailAddress = "${var.NotificationEmailAddress}"
     ServiceName              = "${var.ServiceName}"
