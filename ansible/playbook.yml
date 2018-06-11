@@ -43,6 +43,11 @@
     - debug:
         msg: "ldap_bind_user is {{ ldap_bind_user }}"
         verbosity: 2
+  tasks:
+    - name: "Absent package ntp for installation of chrony in role influxdata.chrony"
+      package:
+        name: "ntp*"
+        state: "absent"
   roles:
     - common
     - yatesr.timezone
