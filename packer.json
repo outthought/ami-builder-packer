@@ -38,6 +38,7 @@
       "Name": "{{user `ami_name_amzn`}}"
     },
     "ami_description": "Amazon Linux Basic",
+    "associate_public_ip_address": "true",
     "vpc_id": "{{user `vpc`}}",
     "subnet_id": "{{user `subnet`}}"
     },
@@ -71,6 +72,7 @@
       "Name": "{{user `ami_name_ubuntu`}}"
         },
     "ami_description": "Canonical, Ubuntu, 16.04 LTS",
+    "associate_public_ip_address": "true",
     "vpc_id": "{{user `vpc`}}",
     "subnet_id": "{{user `subnet`}}"
   }],
