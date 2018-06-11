@@ -43,7 +43,7 @@ phases:
       - ./packer validate packer.json
   build:          
     commands:
-      - ./packer build -debug packer.json | tee build.log
+      - ./packer build packer.json | tee build.log
   post_build:
     commands:
       - egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
