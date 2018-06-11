@@ -38,6 +38,7 @@ phases:
       - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sudo.git --branch 0.0.7 sudo
       - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-snmpd.git --branch 0.2.5 snmpd
       - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-inventory.git --branch 1.1.6 inventory
+      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-deploy-monitor.git --branch 1.2.2 deploy-monitor
       - cd ../..
       - echo "Validating Packer template"
       - ./packer validate packer.json
