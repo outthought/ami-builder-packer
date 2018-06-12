@@ -3,5 +3,4 @@ ansible-role-cloud-init.git --branch 0.0.1
 ansible-role-authconfig.git --branch 1.3.2
 ansible-role-sudo.git --branch 0.0.7
 ansible-role-snmpd.git --branch 0.2.5
-ansible-inventory.git --branch 1.1.6
 ansible-role-deploy-monitor.git --branch 1.2.2

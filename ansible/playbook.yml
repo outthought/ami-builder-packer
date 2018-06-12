@@ -54,5 +54,4 @@
     - authconfig
     - sudo
     - snmpd
-    - inventory
     - deploy-monitor
