@@ -27,19 +27,11 @@ phases:
       - echo "Place ansible parameters into group_vars/all"
       - echo "$GROUP_VARS" > ansible/group_vars/all
       - echo "Directly clone all repos for ansible roles here."
-      - cd ansible/roles
       # Pass this in as parameters a custom requirements.yml for ansible-galxy, somehow...
       # Alternatively, build a zip and pull from S3.
       # Public roles are contained in the ansible/requirements.yml file and installed by packer.
       # These roles are all within private GitHub repositorys in the SPSCommerce organization.
-      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sps-common.git --branch 0.2.7 common
-      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-cloud-init.git --branch 0.0.13 cloud-init
-      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-authconfig.git --branch 1.3.2 authconfig
-      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sudo.git --branch 0.0.7 sudo
-      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-snmpd.git --branch 0.2.5 snmpd
-      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-inventory.git --branch 1.1.6 inventory
-      - git clone -q --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-deploy-monitor.git --branch 1.2.2 deploy-monitor
-      - cd ../..
+      - awk '{ system("git clone -nq --depth 1 --branch " $1 " https://$GITHUB_TOKEN@github.com/" $2 " ansible/roles") }' gitrepos
       - echo "Validating Packer template"
       - ./packer validate packer.json
   build:          
