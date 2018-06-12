@@ -28,7 +28,6 @@
 
 - hosts: localhost
   gather_facts: False
-  connection: local
   become: yes
   pre_tasks:
     - debug:
