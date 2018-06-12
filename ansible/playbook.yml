@@ -47,11 +47,11 @@
         name: "ntp*"
         state: "absent"
   roles:
-    - common
+    - ansible-role-sps-common
     - yatesr.timezone
     - influxdata.chrony
-    - cloud-init
-    - authconfig
-    - sudo
-    - snmpd
-    - deploy-monitor
+    - ansible-role-cloud-init
+    - ansible-role-authconfig
+    - ansible-role-sudo
+    - ansible-role-snmpd
+    - ansible-role-deploy-monitor
