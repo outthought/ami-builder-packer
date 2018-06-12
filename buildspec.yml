@@ -32,9 +32,8 @@ phases:
       # Alternatively, build a zip and pull from S3.
       # Public roles are contained in the ansible/requirements.yml file and installed by packer.
       # These roles are all within private GitHub repositorys in the SPSCommerce organization.
-      - gitcmd='git clone -n --depth 1 --branch '
       - urlsnippet=" https://$GITHUB_TOKEN@github.com/SPSCommerce/"
-      - awk -v git=$gitcmd -v url=$urlsnippet '{ system(git $1 url $2 ".git") }' gitrepos
+      - awk -v url=$urlsnippet '{ system("git clone -n --depth 1 --branch " $1 url $2 ".git") }' gitrepos
       - cd ../..
       - echo "Validating Packer template"
       - ./packer validate packer.json
