@@ -23,7 +23,7 @@ phases:
       - yum install -y git
   pre_build:
     commands:
-      - mkdir -p ansible/{group_vars,roles}
+      - mkdir -p ansible/group_vars
       - echo "Place ansible parameters into group_vars/all"
       - echo "$GROUP_VARS" > ansible/group_vars/all
       - echo "Directly clone all repos for ansible roles."
