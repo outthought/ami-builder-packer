@@ -100,24 +100,36 @@ Supply the following parameters to the CloudFormation stack.
 
 Use a public subnet. This CodeBuild project must be deployed to a VPC with a public subnet. Pass in the ID of a public subnet to the stack.
 
+# Ansible Roles and Variables
+
 ## Specify Ansible Roles
 
-1. Add to the Ansible playbook.
-2. Add source details to `buildspec.yml` or `requirements.yml`.
+To define the Ansible roles applied to the image, do both of the following steps.
+
+1. Add roles to the Ansible playbook in `playbook.yml`.
+2. Add source details to the project:
+  - If role is in SPSCommerce organization of GitHub:
+    + Add repository name and version to `gitrepos` to be cloned by git clone command in `buildspec.yml`
+  - If role is from Ansible Galaxy:
+    + Add name and version to `requirements.yml` to be installed by packer's call to galaxy.
 
 Specify roles stored in private GitHub repos within the file `buildspec.yml`. By using `git clone` in `pre_build`, CodeBuild can access private GitHub repos.
 Public roles are specified in `ansible/requirements.yml` and are fetched within Packer by ansible galaxy (a feat not possible yet for private GitHub).
 Any roles obtained by either method, must then be added to the list of roles in `playbook.yml`.
 
-## How to Provide Parameters to Ansible, or Explanation of Configuration By Ansible, or How to Change The Applied Configuration
+## Ansible Variables
 
-Here is how to pass parameters into this CodeBuild instance for Ansible and GitHub.
+We must pass parameters and passwords to CodeBuild.
 
-It is not great practice to write the value of parameters, much less secure parameters like passwords, into source code.
+We pass in the following parameters using AWS SSM Parameter Store:
+- Ansible variables in a map, or dictionary, stored as a string (JSON-object).
+- GitHub OAuth token to clone private repos in GitHub.
+
+It is not safe practice to write parameter values into source code, much less secure parameters like passwords.
 Neither is it great practice to put sensitive values into plaintext or environment variables.
-This uses AWS' solution within CodeBuild, namely `env: parameter-store`.
+To try to be secure and modular, we use an AWS' solution within CodeBuild, namely `env: parameter-store`.
 
-Note that most parameters of a non-sensitive nature here are coming from the `defaults` and `vars` of the roles themselves.
+Note that most parameters of a non-sensitive nature here are coming from the `defaults` and `vars` of the Ansible roles.
 
 ### Secure Parameters in AWS CodeBuild
 
@@ -189,45 +201,12 @@ Put them into SSM Parameter Store with the AWS cli.
 
 `aws ssm put-parameter --name '/ansible/vars/ami' --type SecureString --value (echo (cat vars.json))`
 
-## Specify Ansible Roles
-
-This pipeline calls multiple anisible roles stored in their own GitHub repos.
-
-To work with them, open `buildspec.yml` and view the `pre-build: commands` section.
-
-```
-pre-build:
-  commands:
-...
-    - echo "Directly clone all repos for ansible roles here."
-    - cd ansible/roles
-    - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-sps-common.git --branch 0.2.7 common
-    - git clone --single-branch --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/ansible-role-time.git --branch 0.2.2 time
-...
-```
-
-Notice how several things are specified here:
-- Add or remove roles here, then call them in Ansible with the playbook.
-- GitHub tags specify version of code by the `--branch` switch.
-- The last command token nicknames the role for use by ansible, e.g. `common`.
-
-### Example Ansible Playbook Role Inclusion
-
-Include the roles in the play by their nicknames.
-```
-  roles:
-    - common
-    - time
-```
-
 ## Configuration Outside of Ansible Roles
 
 Ansible roles supply the bulk of the applied configuration. Outside of Ansible, Packer executes additional configuration in provisioners.
-
 It is important to note that configuration of the images can occur here, too.
 
 To work with Packer's provisioners, open `packer.json`.
-
 In the `provisioners` section notice that there are shell provisioners and a call to ansible provisioners.
 
 There is a shell provisioner that enables `ansible-local` to work by installing ansible on the instance. 
