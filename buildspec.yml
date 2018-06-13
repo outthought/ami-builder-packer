@@ -26,16 +26,15 @@ phases:
       - mkdir -p ansible/group_vars
       - echo "Place ansible parameters into group_vars/all"
       - echo "$GROUP_VARS" > ansible/group_vars/all
-      - echo "Directly clone all repos for ansible roles."
+      - echo "Directly clone private repos for ansible roles."
       - cd ansible/roles
-      # Pass this in as parameters a custom requirements.yml for ansible-galxy, somehow...
-      # Alternatively, build a zip and pull from S3.
-      # Public roles are contained in the ansible/requirements.yml file and installed by packer.
-      # These roles are all within private GitHub repositorys in the SPSCommerce organization.
+      # Public roles in ansible/requirements.yml are installed by packer.
+      # Private roles within private GitHub SPSCommerce organization
+      # require permission, and are read from file gitrepos as follows:
       - |
-        cat gitrepos | while read repo vers
+        cat gitrepos | while read repo version
         do
-          git clone -n --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/$repo.git --branch $vers
+          git clone -n --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/$repo.git --branch $version
         done
       - cd ../..
       - echo "Validating Packer template"
