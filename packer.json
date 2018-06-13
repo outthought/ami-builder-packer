@@ -107,5 +107,12 @@
         "rm .ssh/authorized_keys ; sudo rm /root/.ssh/authorized_keys"
       ]
     }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
   ]
 }

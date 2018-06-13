@@ -55,4 +55,5 @@ artifacts:
   files:
     - ami_builder_event.json
     - build.log
+    - manifest.json
   discard-paths: yes
