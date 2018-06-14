@@ -17,9 +17,14 @@ env:
 phases:
   install:
     commands:
+      - aws --version
       - echo "Installing Packer"
       - curl -o packer.zip https://releases.hashicorp.com/packer/1.2.4/packer_1.2.4_linux_amd64.zip && unzip packer.zip
-      - yum install -y git jq aws-cli
+      - yum install -y -q git jq aws-cli
+      - aws --version
+      - yum update -y aws-cli
+      - aws --version
+      - aws ssm help
   pre_build:
     commands:
       - mkdir -p ansible/group_vars
