@@ -113,6 +113,12 @@
       "type": "manifest",
       "output": "manifest.json",
       "strip_path": true
+    },
+    {
+      "inline": [
+          "jq -c '.builds[]|{Name:(\"/techops/ami/\"+.name),Description:\"Latest AMI from the pipeline\",Value:.artifact_id|split(\":\")[1],Type:\"String\",Overwrite:true,AllowedPattern:\"^ami-[a-z0-9]{8,17}\"}' manifest.json > args.json"
+      ],
+      "type": "shell-local"
     }
   ]
 }
