@@ -51,6 +51,7 @@ phases:
       - aws events put-events --entries file://ami_builder_event.json
       - echo "build completed on `date`"
       - jq '.' args.json
+      - while read line; do aws ssm put-parameter --cli-input-json "$line"; done < args.json
 artifacts:
   files:
     - ami_builder_event.json
