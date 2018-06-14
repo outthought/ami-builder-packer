@@ -45,7 +45,7 @@
     - name: "Absent package ntp for installation of chrony in role influxdata.chrony"
       package:
         name: "ntp*"
-        state: "absent"
+        state: "present"
   roles:
     - ansible-role-sps-common
     - yatesr.timezone
