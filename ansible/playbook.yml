@@ -47,7 +47,6 @@
         name: "ntp*"
         state: "absent"
   roles:
-    - you_shall_not_pass
     - ansible-role-sps-common
     - yatesr.timezone
     - influxdata.chrony
