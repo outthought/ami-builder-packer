@@ -50,7 +50,10 @@ phases:
       - sed -i.bak "s/<<AMI-ID>>/$(cat ami_id.txt)/g" ami_builder_event.json
       - aws events put-events --entries file://ami_builder_event.json
       - echo "build completed on `date`"
+      - aws --version
+      - aws ssm put-parameter --generate-cli-skeleton
       - jq '.' args.json
+      - test -s manifest.json && test -s args.json || exit 1
       - while read line; do aws ssm put-parameter --cli-input-json "$line"; done < args.json
 artifacts:
   files:
