@@ -51,13 +51,13 @@ phases:
           Value: .artifact_id | split(":")[1],
           Type: "String",
           Overwrite: true,
-          AllowedPattern: "^ami-[a-z0-9]{8,17}"}' manifest.json > ssm.json
+          AllowedPattern: "^ami-[a-z0-9]{8,17}"}' manifest.json | tee ssm.json
       - |
         jq -c '.builds[] | {
           Source: "com.ami.builder",
           DetailType: "AmiBuilder",
           Detail: "{\"AmiStatus\": \"Created\"}",
-          Resources: [.artifact_id | split(":")[1]]}' manifest.json > events.json
+          Resources: [.artifact_id | split(":")[1]]}' manifest.json | tee events.json
       - test -s manifest.json || exit 1
       - echo "build completed on `date`"
       - echo "Send CloudWatch events for each ami in file we populate from Packer manifest in post-processor."
