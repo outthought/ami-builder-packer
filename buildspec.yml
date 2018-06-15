@@ -7,7 +7,6 @@ env:
     CHECKPOINT_DISABLE: 1
     PACKER_NO_COLOR: 1
     # PACKER_LOG: 1
-    ANSIBLE_STDOUT_CALLBACK: debug
   parameter-store:
     # Put secret Ansible vars into a JSON-string SSM Parameter Store SecureString.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
