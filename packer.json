@@ -94,7 +94,7 @@
     },
     {
         "type": "ansible-local",
-        "command": "ANSIBLE_CONFIG=ansible/ansible.cfg PYTHONUNBUFFERED=1 ansible-playbook",
+        "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
         "playbook_file": "ansible/playbook.yml",
         "extra_arguments": [ "-vv" ],
         "galaxy_file": "ansible/requirements.yml",
