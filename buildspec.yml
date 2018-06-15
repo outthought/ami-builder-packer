@@ -44,16 +44,13 @@ phases:
       # - ./packer build -debug packer.json | tee build.log
   post_build:
     commands:
-      # Packer doesn't return non-zero status; exit if Packer provisioner failed
+      # Packer doesn't return non-zero status; exit if Packer manifest doesn't exist, namely, the provisioners all failed
       - test -s manifest.json || exit 1
       - echo "build completed on `date`"
       - echo "Send CloudWatch events for each ami in file we populate from Packer manifest in post-processor."
       - while read line; do aws events put-events --entries "$line"; done < events.json
       - echo "Put ssm parameter for each ami in file we populate from Packer manifest in post-processor."
-      - jq '.' ssm.json
-      - while read line; do echo "$line"; echo "Done_with_line"; done < ssm.json
       - while read line; do aws ssm put-parameter --cli-input-json "$line"; done < ssm.json
-      - aws ssm put-parameter --generate-cli-skeleton
 artifacts:
   files:
     - events.json
