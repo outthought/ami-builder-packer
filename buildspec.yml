@@ -47,7 +47,7 @@ phases:
       - test -s manifest.json || exit 1
       - echo "build completed on `date`"
       - echo "Send CloudWatch events for each ami in file we populate from Packer manifest in post-processor."
-      - while read line; do aws events put-events --entries "$line"; done < events.json
+      - while read -r line; do aws events put-events --entries "$line"; done < events.json
       - echo "Put ssm parameter for each ami in file we populate from Packer manifest in post-processor."
       - while read line; do aws ssm put-parameter --cli-input-json "$line"; done < ssm.json
 artifacts:
