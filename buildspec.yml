@@ -31,10 +31,9 @@ phases:
       # Private roles within private GitHub SPSCommerce organization
       # require permission, and are read from file gitrepos as follows:
       - |
-        cat gitrepos | while read repo version
-        do
+        while read repo version; do
           git clone -n --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/$repo.git --branch $version
-        done
+        done < gitrepos
       - cd ../..
       - echo "Validating Packer template"
       - ./packer validate packer.json
