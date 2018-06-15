@@ -96,7 +96,7 @@
         "type": "ansible-local",
         "command": "ANSIBLE_CONFIG=ansible/ansible.cfg PYTHONUNBUFFERED=1 ansible-playbook",
         "playbook_file": "ansible/playbook.yml",
-        "extra_arguments": [ "-vv" ],
+        "extra_arguments": [ "" ],
         "galaxy_file": "ansible/requirements.yml",
         "playbook_dir": "ansible",
         "role_paths": [ "ansible/roles" ]
