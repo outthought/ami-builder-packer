@@ -116,5 +116,23 @@
     }
   ]
     "_builders_comment": "The list of images to customize.",
+        "ami_block_device_mappings": [
+            {   "device_name": "/dev/xvda",
+                "delete_on_termination": true,
+                "volume_type": "gp2"
+            }
+        ],
+        "ami_block_device_mappings": [
+            {   "device_name": "/dev/xvda",
+                "delete_on_termination": true,
+                "volume_type": "gp2"
+            }
+        ],
+        "ami_block_device_mappings": [
+            {   "device_name": "/dev/xvda",
+                "delete_on_termination": true,
+                "volume_type": "gp2"
+            }
+        ],
     "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
 }
