@@ -170,4 +170,11 @@
         }
     ],
     "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
+    "post-processors": [
+        {
+            "type": "manifest",
+            "output": "manifest.json",
+            "strip_path": true
+        }
+    ]
 }
