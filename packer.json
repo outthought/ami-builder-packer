@@ -20,6 +20,7 @@
                    "102837901569", "013907871322", "206029621532",
                    "286198878708", "443319210888"],
         "most_recent": true
+    "description": "Create each AMI; provision with ansible-playbook. Make files from Packer's manifest to send on to next steps.",
     },
     "instance_type": "t2.micro",
     "ssh_username": "ec2-user",
@@ -114,4 +115,6 @@
       "strip_path": true
     }
   ]
+    "_builders_comment": "The list of images to customize.",
+    "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
 }
