@@ -1,128 +1,58 @@
 {
-  "variables": {
-    "vpc": "{{env `BUILD_VPC_ID`}}",
-    "subnet": "{{env `BUILD_SUBNET_ID`}}",
-    "aws_region": "{{env `AWS_REGION`}}",
-    "ami_name_ubuntu": "Test_ubuntu_{{isotime \"2006-01-02_0304\"}}",
-    "ami_name_amzn": "Test_amzn_{{isotime \"2006-01-02_0304\"}}"
-  },
-  "builders": [{
-    "name": "AmazonLinux",
-    "type": "amazon-ebs",
-    "region": "{{user `aws_region`}}",
-    "source_ami_filter": {
-        "filters": {
-            "virtualization-type": "hvm",
-            "name": "amzn-ami-hvm-*-x86_64-gp2",
-            "root-device-type": "ebs"
-        },
-        "owners": ["137112412989", "591542846629", "801119661308",
-                   "102837901569", "013907871322", "206029621532",
-                   "286198878708", "443319210888"],
-        "most_recent": true
     "description": "Create each AMI; provision with ansible-playbook. Make files from Packer's manifest to send on to next steps.",
+    "variables": {
+        "vpc": "{{ env `BUILD_VPC_ID` }}",
+        "subnet": "{{ env `BUILD_SUBNET_ID` }}",
+        "aws_region": "{{ env `AWS_REGION` }}",
+        "ami_name_ubuntu": "Test_ubuntu_{{ isotime \"2006-01-02_0304\" }}",
+        "ami_name_amzn": "Test_amzn_{{ isotime \"2006-01-02_0304\" }}",
         "ami_name_amzn2": "Test_amzn2_{{ isotime \"2006-01-02_0304\" }}"
     },
-    "instance_type": "t2.micro",
-    "ssh_username": "ec2-user",
-    "ami_name": "{{user `ami_name_amzn` | clean_ami_name}}",
-    "tags": {
-      "Name": "{{user `ami_name_amzn`}}"
-    },
-    "run_tags": {
-      "Name": "{{user `ami_name_amzn`}}"
-    },
-    "run_volume_tags": {
-      "Name": "{{user `ami_name_amzn`}}"
-    },
-    "snapshot_tags": {
-      "Name": "{{user `ami_name_amzn`}}"
-    },
-    "ami_description": "Amazon Linux Basic",
-    "associate_public_ip_address": true,
-    "vpc_id": "{{user `vpc`}}",
-    "subnet_id": "{{user `subnet`}}"
-    },
-    {
-    "name": "Ubuntu",
-    "type": "amazon-ebs",
-    "region": "{{user `aws_region`}}",
-    "source_ami_filter": {
-        "filters": {
-            "virtualization-type": "hvm",
-            "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
-            "root-device-type": "ebs"
-        },
-        "owners": ["099720109477"],
-        "most_recent": true
-        },
-    "instance_type": "t2.micro",
-    "ssh_username": "ubuntu",
-    "ami_name": "{{user `ami_name_ubuntu` | clean_ami_name}}",
-    "tags": {
-      "Name": "{{user `ami_name_ubuntu`}}"
-        },
-    "run_tags": {
-      "Name": "{{user `ami_name_ubuntu`}}"
-        },
-    "run_volume_tags": {
-      "Name": "{{user `ami_name_ubuntu`}}"
-        },
-    "snapshot_tags": {
-      "Name": "{{user `ami_name_ubuntu`}}"
-        },
-    "ami_description": "Canonical, Ubuntu, 16.04 LTS",
-    "associate_public_ip_address": true,
-    "vpc_id": "{{user `vpc`}}",
-    "subnet_id": "{{user `subnet`}}"
-  }],
-  "provisioners": [
-    {
-        "type": "shell",
-        "only": ["AmazonLinux"],
-        "inline": [
-            "sudo yum update -y",
-            "sudo pip install ansible"
-        ]
-    },
-    {
-        "type": "shell",
-        "only": ["Ubuntu"],
-        "inline": [
-            "sudo apt-get update && sudo apt-get upgrade -y",
-            "sudo apt-get install -y python-pip",
-            "sudo pip install ansible"
-        ]
-    },
-    {
-        "type": "ansible-local",
-        "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
-        "playbook_file": "ansible/playbook.yml",
-        "extra_arguments": [ "-v" ],
-        "galaxy_file": "ansible/requirements.yml",
-        "playbook_dir": "ansible"
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "rm .ssh/authorized_keys ; sudo rm /root/.ssh/authorized_keys"
-      ]
-    }
-  ],
-  "post-processors": [
-    {
-      "type": "manifest",
-      "output": "manifest.json",
-      "strip_path": true
-    }
-  ]
     "_builders_comment": "The list of images to customize.",
+    "builders": [
+        {
+        "name": "AmazonLinux",
+        "type": "amazon-ebs",
+        "region": "{{ user `aws_region` }}",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "name": "amzn-ami-hvm-*-x86_64-gp2",
+                "root-device-type": "ebs"
+            },
+            "owners": ["137112412989", "591542846629", "801119661308",
+                    "102837901569", "013907871322", "206029621532",
+                    "286198878708", "443319210888"],
+            "most_recent": true
+        },
+        "instance_type": "t2.micro",
+        "ssh_username": "ec2-user",
         "ami_block_device_mappings": [
             {   "device_name": "/dev/xvda",
                 "delete_on_termination": true,
                 "volume_type": "gp2"
             }
         ],
+        "ami_name": "{{ user `ami_name_amzn` | clean_ami_name }}",
+        "tags": {
+            "Name": "{{ user `ami_name_amzn` }}",
+            "os": "amazonlinux"
+        },
+        "run_tags": {
+            "Name": "{{ user `ami_name_amzn` }}"
+        },
+        "run_volume_tags": {
+            "Name": "{{ user `ami_name_amzn` }}"
+        },
+        "snapshot_tags": {
+            "Name": "{{ user `ami_name_amzn` }}"
+        },
+        "ami_description": "Amazon Linux Basic",
+        "associate_public_ip_address": true,
+        "vpc_id": "{{ user `vpc` }}",
+        "subnet_id": "{{ user `subnet` }}"
+        },
+        {
         "name": "AmazonLinux2",
         "type": "amazon-ebs",
         "region": "{{ user `aws_region` }}",
@@ -164,11 +94,80 @@
         "vpc_id": "{{ user `vpc` }}",
         "subnet_id": "{{ user `subnet` }}"
         },
+        {
+        "name": "Ubuntu",
+        "type": "amazon-ebs",
+        "region": "{{ user `aws_region` }}",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+                "root-device-type": "ebs"
+            },
+            "owners": ["099720109477"],
+            "most_recent": true
+        },
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "{{ user `ami_name_ubuntu` | clean_ami_name }}",
         "ami_block_device_mappings": [
             {   "device_name": "/dev/xvda",
                 "delete_on_termination": true,
                 "volume_type": "gp2"
             }
         ],
+        "tags": {
+            "Name": "{{ user `ami_name_ubuntu` }}",
+            "os": "ubuntu16"
+        },
+        "run_tags": {
+            "Name": "{{ user `ami_name_ubuntu` }}"
+        },
+        "run_volume_tags": {
+            "Name": "{{ user `ami_name_ubuntu` }}"
+        },
+        "snapshot_tags": {
+            "Name": "{{ user `ami_name_ubuntu` }}"
+        },
+        "ami_description": "Canonical, Ubuntu, 16.04 LTS",
+        "associate_public_ip_address": true,
+        "vpc_id": "{{ user `vpc` }}",
+        "subnet_id": "{{ user `subnet` }}"
+        }
+    ],
+    "_provisioners_comments": "Install ansible on the each instance. Execute local ansible-playbook.",
+    "provisioners": [
+        {
+            "type": "shell",
+            "only": [ "AmazonLinux", "AmazonLinux2" ],
+            "inline": [
+                "sudo yum update -y",
+                "sudo pip install ansible"
+            ]
+        },
+        {
+            "type": "shell",
+            "only": ["Ubuntu"],
+            "inline": [
+                "sudo apt-get update",
+                "sudo apt-get install -y python-pip",
+                "sudo pip install ansible"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
+            "playbook_file": "ansible/playbook.yml",
+            "extra_arguments": [ "-v" ],
+            "galaxy_file": "ansible/requirements.yml",
+            "playbook_dir": "ansible"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "rm .ssh/authorized_keys ; sudo rm /root/.ssh/authorized_keys"
+            ]
+        }
+    ],
     "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
 }
