@@ -154,14 +154,15 @@
             "type": "shell",
             "only": [ "amazonlinux" ],
             "inline": [
-                "sudo pip install ansible"
+                "pip install ansible==2.5.5 --user"
             ]
         },
         {
             "type": "shell",
             "only": [ "amazonlinux2" ],
             "inline": [
-                "sudo amazon-linux-extras install ansible2 -y"
+                "sudo yum install python-pip -y",
+                "pip install ansible==2.5.5 --user"
             ]
         },
         {
@@ -169,16 +170,8 @@
             "only": [ "ubuntu16", "ubuntu18" ],
             "inline": [
                 "sudo apt-get update",
-                "sudo apt-get install -y python-pip",
-                "sudo pip install ansible"
-            ]
-        },
-        {
-            "type": "shell",
-            "only": [ "Ubuntu18" ],
-            "inline": [
-                "sudo apt-get update",
-                "sudo apt-get install ansible -y"
+                "sudo apt-get install python-pip -y",
+                "pip install ansible==2.5.5 --user"
             ]
         },
         {
