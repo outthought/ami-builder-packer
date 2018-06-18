@@ -170,7 +170,16 @@
         },
         {
             "type": "shell",
-            "only": [ "Ubuntu16", "Ubuntu18" ],
+            "only": [ "Ubuntu16" ],
+            "inline": [
+                "sudo apt-get update",
+                "sudo apt-get install -y python-pip",
+                "sudo pip install ansible"
+            ]
+        },
+        {
+            "type": "shell",
+            "only": [ "Ubuntu18" ],
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install ansible -y"
