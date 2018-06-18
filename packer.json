@@ -4,10 +4,10 @@
         "vpc": "{{ env `BUILD_VPC_ID` }}",
         "subnet": "{{ env `BUILD_SUBNET_ID` }}",
         "aws_region": "{{ env `AWS_REGION` }}",
-        "ami_name_ubuntu16": "Test_ubuntu16_{{ isotime \"2006-01-02_0304\" }}",
-        "ami_name_ubuntu18": "Test_ubuntu18_{{ isotime \"2006-01-02_0304\" }}",
-        "ami_name_amzn": "Test_amzn_{{ isotime \"2006-01-02_0304\" }}",
-        "ami_name_amzn2": "Test_amzn2_{{ isotime \"2006-01-02_0304\" }}"
+        "ami_name_ubuntu16": "Test_ubuntu16_{{ isotime \"2006-01-02_030405\" }}",
+        "ami_name_ubuntu18": "Test_ubuntu18_{{ isotime \"2006-01-02_030405\" }}",
+        "ami_name_amzn": "Test_amzn_{{ isotime \"2006-01-02_030405\" }}",
+        "ami_name_amzn2": "Test_amzn2_{{ isotime \"2006-01-02_030405\" }}"
     },
     "_builders_comment": "The list of images to customize.",
     "builders": [
