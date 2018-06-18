@@ -3,16 +3,13 @@
     "variables": {
         "vpc": "{{ env `BUILD_VPC_ID` }}",
         "subnet": "{{ env `BUILD_SUBNET_ID` }}",
-        "aws_region": "{{ env `AWS_REGION` }}",
-        "ami_name_ubuntu16": "Test_ubuntu16_{{ isotime \"2006-01-02_030405\" }}",
-        "ami_name_ubuntu18": "Test_ubuntu18_{{ isotime \"2006-01-02_030405\" }}",
-        "ami_name_amzn": "Test_amzn_{{ isotime \"2006-01-02_030405\" }}",
-        "ami_name_amzn2": "Test_amzn2_{{ isotime \"2006-01-02_030405\" }}"
+        "aws_region": "{{ env `AWS_REGION` }}"
     },
     "_builders_comment": "The list of images to customize.",
     "builders": [
         {
-        "name": "AmazonLinux",
+        "name": "amazonlinux",
+        "ami_description": "Amazon Linux Basic",
         "type": "amazon-ebs",
         "region": "{{ user `aws_region` }}",
         "source_ami_filter": {
@@ -28,27 +25,27 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ec2-user",
-        "ami_name": "{{ user `ami_name_amzn` | clean_ami_name }}",
+        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "{{ user `ami_name_amzn` }}",
-            "os": "amazonlinux"
+            "Name": "testami_{{ build_name }}",
+            "os": "{{ build_name }}"
         },
         "run_tags": {
-            "Name": "{{ user `ami_name_amzn` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "run_volume_tags": {
-            "Name": "{{ user `ami_name_amzn` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "snapshot_tags": {
-            "Name": "{{ user `ami_name_amzn` }}"
+            "Name": "testami_{{ build_name }}"
         },
-        "ami_description": "Amazon Linux Basic",
         "associate_public_ip_address": true,
         "vpc_id": "{{ user `vpc` }}",
         "subnet_id": "{{ user `subnet` }}"
         },
         {
-        "name": "AmazonLinux2",
+        "name": "amazonlinux2",
+        "ami_description": "Amazon Linux 2",
         "type": "amazon-ebs",
         "region": "{{ user `aws_region` }}",
         "source_ami_filter": {
@@ -64,27 +61,27 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ec2-user",
-        "ami_name": "{{ user `ami_name_amzn2` | clean_ami_name }}",
+        "ami_name": "{{ test_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "{{ user `ami_name_amzn2` }}",
-            "os": "amazonlinux2"
+            "Name": "testami_{{ build_name }}",
+            "os": "{{ build_name }}"
         },
         "run_tags": {
-            "Name": "{{ user `ami_name_amzn2` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "run_volume_tags": {
-            "Name": "{{ user `ami_name_amzn2` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "snapshot_tags": {
-            "Name": "{{ user `ami_name_amzn2` }}"
+            "Name": "testami_{{ build_name }}"
         },
-        "ami_description": "Amazon Linux 2",
         "associate_public_ip_address": true,
         "vpc_id": "{{ user `vpc` }}",
         "subnet_id": "{{ user `subnet` }}"
         },
         {
-        "name": "Ubuntu16",
+        "name": "ubuntu16",
+        "ami_description": "Canonical, Ubuntu, 16.04 LTS",
         "type": "amazon-ebs",
         "region": "{{ user `aws_region` }}",
         "source_ami_filter": {
@@ -98,27 +95,27 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
-        "ami_name": "{{ user `ami_name_ubuntu16` | clean_ami_name }}",
+        "ami_name": "{{ test_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "{{ user `ami_name_ubuntu16` }}",
-            "os": "ubuntu16"
+            "Name": "testami_{{ build_name }}",
+            "os": "{{ build_name }}"
         },
         "run_tags": {
-            "Name": "{{ user `ami_name_ubuntu16` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "run_volume_tags": {
-            "Name": "{{ user `ami_name_ubuntu16` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "snapshot_tags": {
-            "Name": "{{ user `ami_name_ubuntu16` }}"
+            "Name": "testami_{{ build_name }}"
         },
-        "ami_description": "Canonical, Ubuntu, 16.04 LTS",
         "associate_public_ip_address": true,
         "vpc_id": "{{ user `vpc` }}",
         "subnet_id": "{{ user `subnet` }}"
         },
         {
-        "name": "Ubuntu18",
+        "name": "ubuntu18",
+        "ami_description": "Canonical, Ubuntu, 18.04 LTS",
         "type": "amazon-ebs",
         "region": "{{ user `aws_region` }}",
         "source_ami_filter": {
@@ -132,21 +129,20 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
-        "ami_name": "{{ user `ami_name_ubuntu18` | clean_ami_name }}",
+        "ami_name": "{{ test_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "{{ user `ami_name_ubuntu18` }}",
-            "os": "ubuntu18"
+            "Name": "testami_{{ build_name }}",
+            "os": "{{ build_name }}"
         },
         "run_tags": {
-            "Name": "{{ user `ami_name_ubuntu18` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "run_volume_tags": {
-            "Name": "{{ user `ami_name_ubuntu18` }}"
+            "Name": "testami_{{ build_name }}"
         },
         "snapshot_tags": {
-            "Name": "{{ user `ami_name_ubuntu18` }}"
+            "Name": "testami_{{ build_name }}"
         },
-        "ami_description": "Canonical, Ubuntu, 18.04 LTS",
         "associate_public_ip_address": true,
         "vpc_id": "{{ user `vpc` }}",
         "subnet_id": "{{ user `subnet` }}"
