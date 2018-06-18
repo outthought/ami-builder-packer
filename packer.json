@@ -61,7 +61,7 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ec2-user",
-        "ami_name": "{{ test_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
             "Name": "testami_{{ build_name }}",
             "os": "{{ build_name }}"
@@ -95,7 +95,7 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
-        "ami_name": "{{ test_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
             "Name": "testami_{{ build_name }}",
             "os": "{{ build_name }}"
@@ -129,7 +129,7 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
-        "ami_name": "{{ test_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
             "Name": "testami_{{ build_name }}",
             "os": "{{ build_name }}"
