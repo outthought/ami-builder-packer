@@ -28,12 +28,6 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ec2-user",
-        "ami_block_device_mappings": [
-            {   "device_name": "/dev/xvda",
-                "delete_on_termination": true,
-                "volume_type": "gp2"
-            }
-        ],
         "ami_name": "{{ user `ami_name_amzn` | clean_ami_name }}",
         "tags": {
             "Name": "{{ user `ami_name_amzn` }}",
@@ -70,12 +64,6 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ec2-user",
-        "ami_block_device_mappings": [
-            {   "device_name": "/dev/xvda",
-                "delete_on_termination": true,
-                "volume_type": "gp2"
-            }
-        ],
         "ami_name": "{{ user `ami_name_amzn` | clean_ami_name }}",
         "tags": {
             "Name": "{{ user `ami_name_amzn` }}",
