@@ -156,10 +156,20 @@
     "provisioners": [
         {
             "type": "shell",
-            "only": [ "AmazonLinux", "AmazonLinux2" ],
+            "only": [ "AmazonLinux" ],
             "inline": [
                 "sudo yum update -y",
                 "sudo pip install ansible"
+            ]
+        },
+        {
+            "type": "shell",
+            "only": [ "AmazonLinux2" ],
+            "inline": [
+                "sudo yum update -y",
+                "curl -O https://bootstrap.pypa.io/get-pip.py",
+                "python3 get-pip.py --user",
+                "pip install ansible"
             ]
         },
         {
