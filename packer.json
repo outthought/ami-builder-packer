@@ -152,21 +152,21 @@
     "provisioners": [
         {
             "type": "shell",
-            "only": [ "AmazonLinux" ],
+            "only": [ "amazonlinux" ],
             "inline": [
                 "sudo pip install ansible"
             ]
         },
         {
             "type": "shell",
-            "only": [ "AmazonLinux2" ],
+            "only": [ "amazonlinux2" ],
             "inline": [
                 "sudo amazon-linux-extras install ansible2 -y"
             ]
         },
         {
             "type": "shell",
-            "only": [ "Ubuntu16" ],
+            "only": [ "ubuntu16", "ubuntu18" ],
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install -y python-pip",
