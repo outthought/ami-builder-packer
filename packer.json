@@ -64,21 +64,21 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ec2-user",
-        "ami_name": "{{ user `ami_name_amzn` | clean_ami_name }}",
+        "ami_name": "{{ user `ami_name_amzn2` | clean_ami_name }}",
         "tags": {
-            "Name": "{{ user `ami_name_amzn` }}",
+            "Name": "{{ user `ami_name_amzn2` }}",
             "os": "amazonlinux2"
         },
         "run_tags": {
-            "Name": "{{ user `ami_name_amzn` }}"
+            "Name": "{{ user `ami_name_amzn2` }}"
         },
         "run_volume_tags": {
-            "Name": "{{ user `ami_name_amzn` }}"
+            "Name": "{{ user `ami_name_amzn2` }}"
         },
         "snapshot_tags": {
-            "Name": "{{ user `ami_name_amzn` }}"
+            "Name": "{{ user `ami_name_amzn2` }}"
         },
-        "ami_description": "Amazon Linux Basic",
+        "ami_description": "Amazon Linux 2",
         "associate_public_ip_address": true,
         "vpc_id": "{{ user `vpc` }}",
         "subnet_id": "{{ user `subnet` }}"
