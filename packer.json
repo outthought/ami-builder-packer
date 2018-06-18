@@ -4,7 +4,8 @@
         "vpc": "{{ env `BUILD_VPC_ID` }}",
         "subnet": "{{ env `BUILD_SUBNET_ID` }}",
         "aws_region": "{{ env `AWS_REGION` }}",
-        "ami_name_ubuntu": "Test_ubuntu_{{ isotime \"2006-01-02_0304\" }}",
+        "ami_name_ubuntu16": "Test_ubuntu16_{{ isotime \"2006-01-02_0304\" }}",
+        "ami_name_ubuntu18": "Test_ubuntu18_{{ isotime \"2006-01-02_0304\" }}",
         "ami_name_amzn": "Test_amzn_{{ isotime \"2006-01-02_0304\" }}",
         "ami_name_amzn2": "Test_amzn2_{{ isotime \"2006-01-02_0304\" }}"
     },
@@ -95,7 +96,7 @@
         "subnet_id": "{{ user `subnet` }}"
         },
         {
-        "name": "Ubuntu",
+        "name": "Ubuntu16",
         "type": "amazon-ebs",
         "region": "{{ user `aws_region` }}",
         "source_ami_filter": {
@@ -109,27 +110,55 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
-        "ami_name": "{{ user `ami_name_ubuntu` | clean_ami_name }}",
-        "ami_block_device_mappings": [
-            {   "device_name": "/dev/xvda",
-                "delete_on_termination": true,
-                "volume_type": "gp2"
-            }
-        ],
+        "ami_name": "{{ user `ami_name_ubuntu16` | clean_ami_name }}",
         "tags": {
-            "Name": "{{ user `ami_name_ubuntu` }}",
+            "Name": "{{ user `ami_name_ubuntu16` }}",
             "os": "ubuntu16"
         },
         "run_tags": {
-            "Name": "{{ user `ami_name_ubuntu` }}"
+            "Name": "{{ user `ami_name_ubuntu16` }}"
         },
         "run_volume_tags": {
-            "Name": "{{ user `ami_name_ubuntu` }}"
+            "Name": "{{ user `ami_name_ubuntu16` }}"
         },
         "snapshot_tags": {
-            "Name": "{{ user `ami_name_ubuntu` }}"
+            "Name": "{{ user `ami_name_ubuntu16` }}"
         },
         "ami_description": "Canonical, Ubuntu, 16.04 LTS",
+        "associate_public_ip_address": true,
+        "vpc_id": "{{ user `vpc` }}",
+        "subnet_id": "{{ user `subnet` }}"
+        },
+        {
+        "name": "Ubuntu18",
+        "type": "amazon-ebs",
+        "region": "{{ user `aws_region` }}",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
+                "root-device-type": "ebs"
+            },
+            "owners": ["099720109477"],
+            "most_recent": true
+        },
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "{{ user `ami_name_ubuntu18` | clean_ami_name }}",
+        "tags": {
+            "Name": "{{ user `ami_name_ubuntu18` }}",
+            "os": "ubuntu18"
+        },
+        "run_tags": {
+            "Name": "{{ user `ami_name_ubuntu18` }}"
+        },
+        "run_volume_tags": {
+            "Name": "{{ user `ami_name_ubuntu18` }}"
+        },
+        "snapshot_tags": {
+            "Name": "{{ user `ami_name_ubuntu18` }}"
+        },
+        "ami_description": "Canonical, Ubuntu, 18.04 LTS",
         "associate_public_ip_address": true,
         "vpc_id": "{{ user `vpc` }}",
         "subnet_id": "{{ user `subnet` }}"
@@ -147,7 +176,7 @@
         },
         {
             "type": "shell",
-            "only": ["Ubuntu"],
+            "only": [ "Ubuntu16", "Ubuntu18" ],
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install -y python-pip",
