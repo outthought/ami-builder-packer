@@ -166,10 +166,7 @@
             "type": "shell",
             "only": [ "AmazonLinux2" ],
             "inline": [
-                "sudo yum update -y",
-                "curl -O https://bootstrap.pypa.io/get-pip.py",
-                "python3 get-pip.py --user",
-                "pip install ansible"
+                "sudo amazon-linux-extras install -y ansible2"
             ]
         },
         {
