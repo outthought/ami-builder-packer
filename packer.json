@@ -166,7 +166,7 @@
             "type": "shell",
             "only": [ "AmazonLinux2" ],
             "inline": [
-                "sudo amazon-linux-extras install -y ansible2"
+                "sudo amazon-linux-extras install ansible2 -y"
             ]
         },
         {
