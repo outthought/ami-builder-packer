@@ -152,14 +152,7 @@
     "provisioners": [
         {
             "type": "shell",
-            "only": [ "amazonlinux" ],
-            "inline": [
-                "sudo pip install ansible==2.5.5"
-            ]
-        },
-        {
-            "type": "shell",
-            "only": [ "amazonlinux2" ],
+            "only": [ "amazonlinux", "amazonlinux2" ],
             "inline": [
                 "sudo yum install python-pip -y",
                 "sudo pip install ansible==2.5.5"
