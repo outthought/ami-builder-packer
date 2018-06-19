@@ -168,6 +168,13 @@
             ]
         },
         {
+            "type": "shell",
+            "only": [ "ubuntu16" ],
+            "inline": [
+                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+            ]
+        },
+        {
             "type": "ansible-local",
             "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
             "playbook_file": "ansible/playbook.yml",
