@@ -6,7 +6,7 @@ env:
     # Disable call to checkpoint.hashicorp.com to look for new versions of Packer.
     CHECKPOINT_DISABLE: 1
     PACKER_NO_COLOR: 1
-    # PACKER_LOG: 1
+    PACKER_LOG: 1
   parameter-store:
     # Put secret Ansible vars into a JSON-string SSM Parameter Store SecureString.
     GROUP_VARS: /techops/ansible_vars/common/group_vars
@@ -34,13 +34,14 @@ phases:
         while read repo version; do
           git clone -n --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/$repo.git --branch $version
         done < gitrepos
+      - ls -al
       - cd ../..
       - echo "Validating Packer template"
       - ./packer validate packer.json
   build:          
     commands:
-      - ./packer build packer.json | tee build.log
-      # - ./packer build -debug packer.json | tee build.log
+      # - ./packer build packer.json | tee build.log
+      - ./packer build -debug packer.json | tee build.log
   post_build:
     commands:
       # Packer doesn't return non-zero status; exit if Packer manifest doesn't exist, namely, the provisioners all failed
