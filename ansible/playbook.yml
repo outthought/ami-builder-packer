@@ -6,14 +6,12 @@
         key: os_{{ ansible_distribution }}
     - debug:
         msg: "ansible_distribution is {{ ansible_distribution }}"
-        verbosity: 2
 
 - hosts: os_Amazon
   gather_facts: False
   tasks:
     - debug:
         msg: "Set image_group=amazonlinux for compatibility with SPS' roles"
-        verbosity: 2
     - set_fact:
         image_group: "amazonlinux"
 
@@ -22,7 +20,6 @@
   tasks:
     - debug:
         msg: "Set image_group=ubuntu16 for compatibility with SPS' roles"
-        verbosity: 2
     - set_fact:
         image_group: "ubuntu16"
 
