@@ -32,9 +32,8 @@ phases:
       # require permission, and are read from file gitrepos as follows:
       - |
         while read repo version; do
-          git clone -n --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/$repo.git --branch $version
+          git clone --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/$repo.git --branch $version
         done < gitrepos
-      - ls -al ./*
       - cd ../..
       - echo "Validating Packer template"
       - ./packer validate packer.json
