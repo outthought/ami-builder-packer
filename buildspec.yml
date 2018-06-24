@@ -34,7 +34,7 @@ phases:
         while read repo version; do
           git clone -n --depth 1 https://$GITHUB_TOKEN@github.com/SPSCommerce/$repo.git --branch $version
         done < gitrepos
-      - ls -al
+      - ls -al ./*
       - cd ../..
       - echo "Validating Packer template"
       - ./packer validate packer.json
