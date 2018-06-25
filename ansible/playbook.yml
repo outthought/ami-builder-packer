@@ -16,7 +16,6 @@
     -
       name: "Gather OS-specific variables"
       include_vars: "{{ item }}"
-      dir: "group_vars"
       with_first_found:
         - "{{ ansible_distribution }}-{{ ansible_distribution_version}}.yml"
     -
