@@ -11,3 +11,13 @@
     - ansible-role-sudo
     - ansible-role-snmpd
     - ansible-role-deploy-monitor
+
+  pre_tasks:
+    -
+      name: "Remove conflicting ntp package on Amazon Linux version 2018.03, in order to install chrony without conflict."
+      package:
+        name: "ntp"
+        state: "absent"
+      when:
+        - ansible_distribution == "Amazon"
+        - ansible_distribution_version == "2018.03"
