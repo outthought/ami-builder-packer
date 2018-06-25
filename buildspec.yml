@@ -22,8 +22,9 @@ phases:
       - pip install --quiet --upgrade awscli
   pre_build:
     commands:
+      - mkdir -p ansible/group_vars
       - echo "Place ansible parameters from ssm parameter-store into group_vars/all"
-      - echo "$GROUP_VARS" > ansible/group_vars/all.yml
+      - echo "$GROUP_VARS" > ansible/group_vars/all
       - echo "Directly clone private repos for ansible roles."
       - cd ansible/roles
       # Public roles in ansible/requirements.yml are installed by packer.
