@@ -14,45 +14,11 @@
 
   pre_tasks:
     -
-      name: |
-        Set variable "image_group" to "amazonlinux"
-        when "ansible_distribution" is "Amazon" and "ansible_distribution_version" is "2018.03",
-        as required by various SPS roles."
-      set_fact:
-        image_group: "amazonlinux"
-      when:
-        - ansible_distribution == "Amazon"
-        - ansible_distribution_version == "2018.03"
-    -
-      name: |
-        Set variable "image_group" to "amazonlinux2"
-        when "ansible_distribution" is "Amazon" and "ansible_distribution_version" is "Candidate",
-        as required by various SPS roles."
-      set_fact:
-        image_group: "amazonlinux2"
-      when:
-        - ansible_distribution == "Amazon"
-        - ansible_distribution_version == "Candidate"
-    -
-      name: |
-        Set variable "image_group" to "ubuntu16"
-        when "ansible_distribution" is "Ubuntu" and "ansible_distribution_version" is "16.04",
-        as required by various SPS roles."
-      set_fact:
-        image_group: "ubuntu16"
-      when:
-        - ansible_distribution == "Ubuntu"
-        - ansible_distribution_version == "16.04"
-    -
-      name: |
-        Set variable "image_group" to "ubuntu18"
-        when "ansible_distribution" is "Ubuntu" and "ansible_distribution_version" is "18.04",
-        as required by various SPS roles."
-      set_fact:
-        image_group: "ubuntu18"
-      when:
-        - ansible_distribution == "Ubuntu"
-        - ansible_distribution_version == "18.04"
+      name: "Gather OS-specific variables"
+      include_vars: "{{ item }}"
+      dir: "group_vars"
+      with_first_found:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_version}}.yml"
     -
       name: "Remove conflicting ntp package on Amazon Linux version 2018.03, in order to install chrony without conflict."
       package:
