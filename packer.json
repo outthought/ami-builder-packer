@@ -152,6 +152,13 @@
     "provisioners": [
         {
             "type": "shell",
+            "only": [ "ubuntu16" ],
+            "inline": [
+                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+            ]
+        },
+        {
+            "type": "shell",
             "only": [ "amazonlinux", "amazonlinux2" ],
             "inline": [
                 "sudo yum install python-pip -y",
@@ -165,13 +172,6 @@
                 "sudo apt-get update",
                 "sudo apt-get install python-pip -y",
                 "sudo pip install ansible==2.5.5"
-            ]
-        },
-        {
-            "type": "shell",
-            "only": [ "ubuntu16" ],
-            "inline": [
-                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
             ]
         },
         {
