@@ -190,7 +190,7 @@
                 "find / -name 'authorized_keys' –exec rm –f {} \;",
                 "sudo shred -u /etc/ssh/*_key /etc/ssh/*_key.pub",
                 "rm -rf /tmp/*",
-                "find /root/.*history /home/*/.*history -exec rm -f {} \;",
+                "unset HISTFILE; find /root/.*history /home/*/.*history -exec rm -f {} \;"
             ]
         }
     ],
