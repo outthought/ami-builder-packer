@@ -186,12 +186,12 @@
             "type": "shell",
             "inline": [
                 "sudo pip uninstall ansible -y",
-                "find /var/log -type f | while read f; do echo -n "" > $f; done",
-                "find / -name 'authorized_keys' –exec rm –f {} \;",
+                "find /var/log -type f | while read f; do echo -n '' > $f; done",
+                "find / -name 'authorized_keys' –exec rm –f {} \\;",
                 "sudo shred -u /etc/ssh/*_key /etc/ssh/*_key.pub",
                 "rm -rf /tmp/*",
                 "passwd -l",
-                "unset HISTFILE; find /root/.*history /home/*/.*history -exec rm -f {} \;"
+                "unset HISTFILE; find /root/.*history /home/*/.*history -exec rm -f {} \\;"
             ]
         }
     ],
