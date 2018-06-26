@@ -184,15 +184,8 @@
         },
         {
             "type": "shell",
-            "inline": [
-                "sudo pip uninstall ansible -y",
-                "find /var/log -type f | while read f; do echo -n '' > $f; done",
-                "find / -name 'authorized_keys' –exec rm –f {} \\;",
-                "sudo shred -u /etc/ssh/*_key /etc/ssh/*_key.pub",
-                "rm -rf /tmp/*",
-                "passwd -l",
-                "unset HISTFILE; find /root/.*history /home/*/.*history -exec rm -f {} \\;"
-            ]
+            "script": "clean.sh",
+            "execute_command": "{{ .Vars }} sudo -E -S sh '{{ .Path }}'"
         }
     ],
     "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
