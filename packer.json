@@ -185,7 +185,12 @@
         {
             "type": "shell",
             "inline": [
-                "rm .ssh/authorized_keys ; sudo rm /root/.ssh/authorized_keys"
+                "sudo pip uninstall ansible -y",
+                "find /var/log -type f | while read f; do echo -n "" > $f; done",
+                "find / -name 'authorized_keys' –exec rm –f {} \;",
+                "sudo shred -u /etc/ssh/*_key /etc/ssh/*_key.pub",
+                "rm -rf /tmp/*",
+                "find /root/.*history /home/*/.*history -exec rm -f {} \;",
             ]
         }
     ],
