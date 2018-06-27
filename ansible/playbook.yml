@@ -1,28 +1,53 @@
+
 ---
 
-- hosts: localhost
-  become: yes
-  roles:
-    - ansible-role-sps-common
-    - yatesr.timezone
-    - influxdata.chrony
-    - ansible-role-cloud-init
-    - ansible-role-authconfig
-    - ansible-role-sudo
-    - ansible-role-snmpd
-    - ansible-role-deploy-monitor
-
-  pre_tasks:
-    -
-      name: "Gather OS-specific variables"
+- name: 'Include variables from OS-specific files, depending on the facts'
+  hosts: 'localhost'
+  tasks:
+    - name: 'Gather OS-specific variables'
       include_vars: "{{ item }}"
       with_first_found:
         - "{{ ansible_distribution }}-{{ ansible_distribution_version}}.yml"
-    -
-      name: "Remove conflicting ntp package on Amazon Linux version 2018.03, in order to install chrony without conflict."
+
+
+- name: 'Execute role influxdata.chrony, first remove conflicting packages, if applicable'
+  gather_facts: 'no'
+  hosts: 'localhost'
+  become: 'yes'
+  pre_tasks:
+    - name: 'Remove conflicting ntp package on Amazon Linux version 2018.03, in order to install chrony without conflict.'
       package:
-        name: "ntp"
-        state: "absent"
+        name: 'ntp'
+        state: 'absent'
       when:
-        - ansible_distribution == "Amazon"
-        - ansible_distribution_version == "2018.03"
+        - 'ansible_distribution == "Amazon"'
+        - 'ansible_distribution_version == "2018.03"'
+  roles:
+    - 'influxdata.chrony'
+
+
+- name: 'Install the timezone role'
+  hosts: 'localhost'
+  gather_facts: 'no'
+  roles:
+    - 'yatesr.timezone'
+
+
+- name: 'Install the big boy role'
+  hosts: 'localhost'
+  gather_facts: 'no'
+  become: 'yes'
+  roles:
+    - 'ansible-role-authconfig'
+
+
+- name: 'Install the remaining roles'
+  hosts: 'localhost'
+  gather_facts: 'no'
+  become: 'yes'
+  roles:
+    - 'ansible-role-sps-common'
+    - 'ansible-role-cloud-init'
+    - 'ansible-role-sudo'
+    - 'ansible-role-snmpd'
+    - 'ansible-role-deploy-monitor'
