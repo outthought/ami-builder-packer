@@ -9,11 +9,10 @@
       with_first_found:
         - "{{ ansible_distribution }}-{{ ansible_distribution_version}}.yml"
 
-
-- name: 'Debug print distro and distro version'
-  debug:
-    msg: "ansible_distribution: {{ ansible_distribution }}, ansible_distribution_version: {{ ansible_distribution_version }}"
-    verbosity: 2
+    - name: 'Debug print distro and distro version'
+      debug:
+        msg: "ansible_distribution: {{ ansible_distribution }}, ansible_distribution_version: {{ ansible_distribution_version }}"
+        verbosity: 2
 
 
 - name: 'Execute role influxdata.chrony, first remove conflicting packages, if applicable'
