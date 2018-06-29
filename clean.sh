@@ -54,9 +54,14 @@ if [ -f /etc/os-release ]; then
     OS=$NAME
     VER=$VERSION_ID
     DIST=$ID_LIKE
+    DEB="debian"
     print_os_details
     cleanup_files
-    cleanup_rpm_cache
+    if [ "$DIST" == "$DEB" ]; then 
+	   cleanup_deb_cache
+    else 
+	   cleanup_rpm_cache
+    fi
 elif type lsb_release >/dev/null 2>&1; then
     # linuxbase.org
     OS=$(lsb_release -si)
