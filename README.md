@@ -170,16 +170,17 @@ In this case, put the entire JSON string into a file path ansible is expecting, 
 
 #### Example CodeBuild Parameter-Store GitHub OAuth Token
 
-Clone private repository in GitHub.
-
+Clone private repository in GitHub. Add the roles you with to reference and a tag or commit sha to `ansible/repos/gitrepos`.
 ```
-  pre_build:
-    commands:
-      - git clone https://$GITHUB_TOKEN@github.com/MyOrgName/ansible-role-bar.git --branch 0.2.7 bar
-
+ansible-role-sps-common 0.2.7
+ansible-role-cloud-init 0.0.13
+ansible-role-authconfig 1.3.5
+ansible-role-sudo 0.0.7
+ansible-role-snmpd 0.2.5
+ansible-role-deploy-monitor 1.2.2
 ```
 
-(This is a work-around because `ansible-galaxy install` lacked the rights to clone).
+The roles listed here will be cloned in the container using a GitHub OAuth Token.
 
 ### How to Put Parameter Containing Ansible Vars
 
@@ -219,5 +220,11 @@ Bear in mind when working with images, that configuration is specified here as w
 
 If you wish to re-deploy, or teardown and make again this entire CodePipeline, it is easy.
 Use the CloudFormation file `pipeline.yaml` in
-[cloudformation](https://github.com/SPSCommerce/ami-builder-packer/tree/development/cloudformation)
+[cloudformation](https://github.com/SPSCommerce/ami-builder/tree/development/cloudformation)
 to tear down or make a new stack. 
+
+You may have to remove the s3 bucket manually, prior to `terraform destroy`.
+```
+set bucket (terraform output | awk '/bucket/ {print $3}'); and echo $bucket
+aws s3 rb s3://$bucket --force
+```
