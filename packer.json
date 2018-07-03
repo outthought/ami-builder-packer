@@ -149,7 +149,7 @@
         {
             "type": "shell",
             "script": "clean.sh",
-            "execute_command": "{{ .Vars }} sudo -E -S sh '{{ .Path }}'"
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
         }
     ],
     "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
