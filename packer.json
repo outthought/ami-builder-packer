@@ -44,42 +44,6 @@
         "subnet_id": "{{ user `subnet` }}"
         },
         {
-        "name": "amazonlinux2",
-        "ami_description": "Amazon Linux 2",
-        "type": "amazon-ebs",
-        "region": "{{ user `aws_region` }}",
-        "source_ami_filter": {
-            "filters": {
-                "virtualization-type": "hvm",
-                "name": "amzn2-ami-hvm-*-x86_64-gp2",
-                "root-device-type": "ebs"
-            },
-            "owners": ["137112412989", "591542846629", "801119661308",
-                    "102837901569", "013907871322", "206029621532",
-                    "286198878708", "443319210888"],
-            "most_recent": true
-        },
-        "instance_type": "t2.micro",
-        "ssh_username": "ec2-user",
-        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
-        "tags": {
-            "Name": "testami_{{ build_name }}",
-            "os": "{{ build_name }}"
-        },
-        "run_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "run_volume_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "snapshot_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "associate_public_ip_address": true,
-        "vpc_id": "{{ user `vpc` }}",
-        "subnet_id": "{{ user `subnet` }}"
-        },
-        {
         "name": "ubuntu16",
         "ami_description": "Canonical, Ubuntu, 16.04 LTS",
         "type": "amazon-ebs",
