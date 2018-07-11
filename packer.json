@@ -9,7 +9,7 @@
     "builders": [
         {
         "name": "amazonlinux",
-        "ami_description": "Amazon Linux Basic",
+        "ami_description": "Official SPS Amazon Linux HVM AMI - Built {{ isotime \"20060102@030405\" }}",
         "type": "amazon-ebs",
         "region": "{{ user `aws_region` }}",
         "source_ami_filter": {
@@ -25,10 +25,11 @@
         },
         "instance_type": "t2.micro",
         "ssh_username": "ec2-user",
-        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+        "ami_name": "SPS - Amazon Linux HVM {{ isotime \"20060102@030405\" | clean_ami_name }}",
         "tags": {
             "Name": "testami_{{ build_name }}",
-            "os": "{{ build_name }}"
+            "os": "{{ build_name }}",
+            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
         },
         "run_tags": {
             "Name": "testami_{{ build_name }}"
