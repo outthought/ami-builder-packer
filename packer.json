@@ -63,7 +63,8 @@
         "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
             "Name": "testami_{{ build_name }}",
-            "os": "{{ build_name }}"
+            "os": "{{ build_name }}",
+            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
         },
         "run_tags": {
             "Name": "testami_{{ build_name }}"
@@ -97,7 +98,8 @@
         "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
             "Name": "testami_{{ build_name }}",
-            "os": "{{ build_name }}"
+            "os": "{{ build_name }}",
+            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
         },
         "run_tags": {
             "Name": "testami_{{ build_name }}"
