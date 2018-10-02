@@ -80,6 +80,41 @@
         "subnet_id": "{{ user `subnet` }}"
         },
         {
+        "name": "ubuntu14",
+        "ami_description": "Canonical, Ubuntu, 14.04 LTS",
+        "type": "amazon-ebs",
+        "region": "{{ user `aws_region` }}",
+        "source_ami_filter": {
+            "filters": {
+                "virtualization-type": "hvm",
+                "name": "ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*",
+                "root-device-type": "ebs"
+            },
+            "owners": ["099720109477"],
+            "most_recent": true
+        },
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+        "tags": {
+            "Name": "testami_{{ build_name }}",
+            "os": "{{ build_name }}",
+            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
+        },
+        "run_tags": {
+            "Name": "testami_{{ build_name }}"
+        },
+        "run_volume_tags": {
+            "Name": "testami_{{ build_name }}"
+        },
+        "snapshot_tags": {
+            "Name": "testami_{{ build_name }}"
+        },
+        "associate_public_ip_address": true,
+        "vpc_id": "{{ user `vpc` }}",
+        "subnet_id": "{{ user `subnet` }}"
+        },
+        {
         "name": "ubuntu18",
         "ami_description": "Canonical, Ubuntu, 18.04 LTS",
         "type": "amazon-ebs",
@@ -119,7 +154,7 @@
     "provisioners": [
         {
             "type": "shell",
-            "only": [ "ubuntu16" ],
+            "only": [ "ubuntu14", "ubuntu16" ],
             "inline": [
                 "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
             ]
@@ -134,7 +169,7 @@
         },
         {
             "type": "shell",
-            "only": [ "ubuntu16", "ubuntu18" ],
+            "only": [ "ubuntu14", "ubuntu16", "ubuntu18" ],
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install python-pip -y",
