@@ -221,7 +221,7 @@ Resources:
                       Configuration:
                         Owner: SPSCommerce
                         Repo: ami-builder
-                        Branch: development
+                        Branch: master
                         OAuthToken: !Ref OAuthToken
                       OutputArtifacts:
                         - Name: SourceZip
