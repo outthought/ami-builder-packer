@@ -164,7 +164,7 @@
             "only": [ "amazonlinux" ],
             "inline": [
                 "sudo yum install python-pip -y",
-                "sudo pip install ansible==2.5.5"
+                "sudo pip install ansible"
             ]
         },
         {
@@ -173,7 +173,7 @@
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install python-pip -y",
-                "sudo pip install ansible==2.5.5"
+                "sudo pip install ansible"
             ]
         },
         {
