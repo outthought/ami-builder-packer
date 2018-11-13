@@ -169,13 +169,23 @@
         },
         {
             "type": "shell",
-            "only": [ "ubuntu14", "ubuntu16", "ubuntu18" ],
+            "only": [ "ubuntu14", "ubuntu16" ],
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install python-pip -y",
                 "sudo pip install ansible==2.5.5"
             ]
         },
+        {
+            "type": "shell",
+            "only": [ "ubuntu18" ],
+            "inline": [
+                "sudo apt-get update",
+                "sudo apt-get install software-properties-common",
+                "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+                "sudo apt-get install ansible -y",
+            ]
+        }
         {
             "type": "ansible-local",
             "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
