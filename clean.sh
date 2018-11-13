@@ -24,10 +24,10 @@ cleanup_files () {
     find /var/log -type f | while read f; do echo -n "" > $f; done
     
     echo "Removing all files from /tmp."
-    rm -rf /tmp/*
+    rm -rfv /tmp/*
     
     echo "Cleaning up /usr/local/bin."
-    rm -rf /usr/local/bin/*
+    rm -rfv /usr/local/bin/*
 
     if python -c "import ansible" &> /dev/null; then
         echo 'pip Ansible package found'
