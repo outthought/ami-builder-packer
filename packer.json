@@ -177,6 +177,13 @@
             ]
         },
         {
+            "type": "shell",
+            "only": [ "ubuntu16" ],
+            "inline": [
+                "sudo pip install -U pyopenssl"
+            ]
+        },
+        {
             "type": "ansible-local",
             "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
             "playbook_file": "ansible/playbook.yml",
