@@ -25,9 +25,6 @@ cleanup_files () {
     
     echo "Removing all files from /tmp."
     rm -rfv /tmp/*
-    
-    echo "Cleaning up /usr/local/bin."
-    rm -rfv /usr/local/bin/*
 
     if python -c "import ansible" &> /dev/null; then
         echo 'pip Ansible package found'
@@ -36,6 +33,9 @@ cleanup_files () {
     else
         echo 'pip ansible module not found'
     fi
+
+    echo "Cleaning up /usr/local/bin."
+    rm -rfv /usr/local/bin/*
 }
 
 # Function to cleanup packages for rpm based distros
