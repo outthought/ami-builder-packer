@@ -169,11 +169,21 @@
         },
         {
             "type": "shell",
-            "only": [ "ubuntu14", "ubuntu16", "ubuntu18" ],
+            "only": [ "ubuntu14" ],
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install python-pip -y",
                 "sudo pip install ansible"
+            ]
+        },
+        {
+            "type": "shell",
+            "only": [ "ubuntu16", "ubuntu18" ],
+            "inline": [
+                "sudo apt-get update",
+                "sudo apt-get install software-properties-common",
+                "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+                "sudo apt-get install ansible -y"
             ]
         },
         {
