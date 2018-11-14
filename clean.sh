@@ -34,8 +34,8 @@ cleanup_files () {
         echo 'pip ansible module not found'
     fi
 
-    echo "Cleaning up /usr/local/bin."
-    rm -rfv /usr/local/bin/*
+    # echo "Cleaning up /usr/local/bin."
+    # rm -rfv /usr/local/bin/*
 }
 
 # Function to cleanup packages for rpm based distros
