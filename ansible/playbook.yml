@@ -16,22 +16,27 @@
         - "{{ ansible_distribution }}.yml"
 
 
-- name: 'Execute role influxdata.chrony, first remove conflicting packages, if applicable'
+- name: 'First remove conflicting ntp packages, if applicable'
   gather_facts: 'no'
   hosts: 'localhost'
   become: 'yes'
-  pre_tasks:
+  tasks:
     - name: 'Remove conflicting ntp package on Amazon Linux, in order to install chrony without conflict.'
       package:
         name: 'ntp'
         state: 'absent'
       when:
         - 'ansible_distribution == "Amazon"'
+
+
+- name: 'Execute role influxdata.chrony'
+  hosts: 'localhost'
+  gather_facts: 'no'
   tasks:
     - include_role:
         name: 'influxdata.chrony'
-      vars:
-        lock_timeout: 180
+      when:
+        - 'ansible_distribution == "Amazon"'
 
 
 - name: 'Install the timezone role'
