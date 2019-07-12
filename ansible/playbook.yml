@@ -21,10 +21,11 @@
   hosts: 'localhost'
   become: 'yes'
   pre_tasks:
-    - name: 'Remove conflicting ntp package on Amazon Linux version 2018.03, in order to install chrony without conflict.'
+    - name: 'Remove conflicting ntp package on Amazon Linux, in order to install chrony without conflict.'
       package:
         name: 'ntp'
         state: 'absent'
+        lock_timeout: 180
       when:
         - 'ansible_distribution == "Amazon"'
   roles:
