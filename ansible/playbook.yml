@@ -34,12 +34,13 @@
         state: 'present'
 
 
-- name: 'Install the timezone role'
+- name: 'Set timezone to America/Chicago'
   hosts: 'localhost'
   gather_facts: 'no'
   tasks:
-    - include_role:
-        name: 'yatesr.timezone'
+    - name: 'Set timezone to America/Chicago'
+      timezone:
+        name: 'America/Chicago'
 
 
 - name: 'Install the big boy role'
