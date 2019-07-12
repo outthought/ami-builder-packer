@@ -25,11 +25,12 @@
       package:
         name: 'ntp'
         state: 'absent'
-        lock_timeout: 180
       when:
         - 'ansible_distribution == "Amazon"'
   roles:
     - 'influxdata.chrony'
+      vars:
+        lock_timeout: 180
 
 
 - name: 'Install the timezone role'
