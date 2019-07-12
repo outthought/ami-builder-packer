@@ -27,7 +27,6 @@
         state: 'absent'
       when:
         - 'ansible_distribution == "Amazon"'
-        - 'ansible_distribution_version == "2018.03"'
   roles:
     - 'influxdata.chrony'
 
