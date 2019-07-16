@@ -36,6 +36,7 @@
 
 - name: 'Set timezone to America/Chicago'
   hosts: 'localhost'
+  become: 'yes'
   gather_facts: 'no'
   tasks:
     - name: 'Set timezone to America/Chicago'
