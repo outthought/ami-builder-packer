@@ -28,10 +28,15 @@
       when:
         - 'ansible_distribution == "Amazon"'
   tasks:
-    - name: 'Ensure chrony'
+    - name: 'chrony package present'
       package:
         name: 'chrony'
         state: 'present'
+    - name: 'chronyd service enabled and started'
+      service:
+        name: 'chronyd'
+        enabled: 'yes'
+        state: 'started'
 
 
 - name: 'Set timezone to America/Chicago'
