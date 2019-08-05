@@ -1,2 +1,3 @@
 ---
 image_group: "ubuntu16"
+chrony: "chrony"

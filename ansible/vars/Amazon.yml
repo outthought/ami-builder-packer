@@ -1,2 +1,3 @@
 ---
 image_group: "amazonlinux"
+chrony: "chronyd"

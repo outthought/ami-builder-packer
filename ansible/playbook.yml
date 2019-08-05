@@ -34,7 +34,7 @@
         state: 'present'
     - name: 'chronyd service enabled and started'
       service:
-        name: 'chronyd'
+        name: "{{ chrony }}"
         enabled: 'yes'
         state: 'started'
 
