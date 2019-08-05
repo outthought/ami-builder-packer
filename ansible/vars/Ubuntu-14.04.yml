@@ -1,2 +1,3 @@
 ---
 image_group: "ubuntu14"
+chrony_service_name: "chrony"

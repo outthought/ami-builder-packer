@@ -1,4 +1,4 @@
 ---
 image_group: "amazonlinux"
-chrony: "chronyd"
+chrony_service_name: "chronyd"
 

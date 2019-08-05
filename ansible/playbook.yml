@@ -32,9 +32,9 @@
       package:
         name: 'chrony'
         state: 'present'
-    - name: 'chronyd service enabled and started'
+    - name: 'chrony service enabled and started'
       service:
-        name: "{{ chrony }}"
+        name: "{{ chrony_service_name }}"
         enabled: 'yes'
         state: 'started'
 
