@@ -2,5 +2,3 @@
 
 - src: yatesr.timezone
   # version: 1.1.0
-- src: influxdata.chrony
-  # version: f006775f94d49995fb830c951f6732c3ce2d9f16
