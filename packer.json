@@ -27,7 +27,6 @@
         "ssh_username": "ec2-user",
         "ami_name": "SPS - Amazon Linux HVM {{ isotime \"20060102@030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "testami_{{ build_name }}",
             "os": "{{ build_name }}",
             "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
         },
@@ -62,7 +61,6 @@
         "ssh_username": "ubuntu",
         "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "testami_{{ build_name }}",
             "os": "{{ build_name }}",
             "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
         },
@@ -97,7 +95,6 @@
         "ssh_username": "ubuntu",
         "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "testami_{{ build_name }}",
             "os": "{{ build_name }}",
             "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
         },
@@ -132,7 +129,6 @@
         "ssh_username": "ubuntu",
         "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
         "tags": {
-            "Name": "testami_{{ build_name }}",
             "os": "{{ build_name }}",
             "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
         },
