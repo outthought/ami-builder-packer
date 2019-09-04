@@ -1,4 +1,4 @@
-ansible-role-sps-common 0.3.2
+ansible-role-sps-common 0.4.0
 ansible-role-cloud-init 0.0.15
 ansible-role-authconfig dbus
 ansible-role-sudo 0.0.7
