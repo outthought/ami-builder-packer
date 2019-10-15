@@ -1,204 +1,265 @@
 {
-    "description": "Create each AMI; provision with ansible-playbook. Make files from Packer's manifest to send on to next steps.",
-    "variables": {
-        "vpc": "{{ env `BUILD_VPC_ID` }}",
-        "subnet": "{{ env `BUILD_SUBNET_ID` }}",
-        "aws_region": "{{ env `AWS_REGION` }}"
+  "description": "Create each AMI; provision with ansible-playbook. Make files from Packer's manifest to send on to next steps.",
+  "variables": {
+    "vpc": "{{ env `BUILD_VPC_ID` }}",
+    "subnet": "{{ env `BUILD_SUBNET_ID` }}",
+    "aws_region": "{{ env `AWS_REGION` }}"
+  },
+  "_builders_comment": "The list of images to customize.",
+  "builders": [
+    {
+      "name": "amazonlinux",
+      "ami_description": "Official SPS Amazon Linux HVM AMI - Built {{ isotime \"20060102@030405\" }}",
+      "type": "amazon-ebs",
+      "region": "{{ user `aws_region` }}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "amzn-ami-hvm-*-x86_64-gp2",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "137112412989",
+          "591542846629",
+          "801119661308",
+          "102837901569",
+          "013907871322",
+          "206029621532",
+          "286198878708",
+          "443319210888"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "SPS - Amazon Linux HVM {{ isotime \"20060102@030405\" | clean_ami_name }}",
+      "tags": {
+        "os": "{{ build_name }}",
+        "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
+      },
+      "run_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "run_volume_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "snapshot_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "associate_public_ip_address": true,
+      "vpc_id": "{{ user `vpc` }}",
+      "subnet_id": "{{ user `subnet` }}"
     },
-    "_builders_comment": "The list of images to customize.",
-    "builders": [
-        {
-        "name": "amazonlinux",
-        "ami_description": "Official SPS Amazon Linux HVM AMI - Built {{ isotime \"20060102@030405\" }}",
-        "type": "amazon-ebs",
-        "region": "{{ user `aws_region` }}",
-        "source_ami_filter": {
-            "filters": {
-                "virtualization-type": "hvm",
-                "name": "amzn-ami-hvm-*-x86_64-gp2",
-                "root-device-type": "ebs"
-            },
-            "owners": ["137112412989", "591542846629", "801119661308",
-                    "102837901569", "013907871322", "206029621532",
-                    "286198878708", "443319210888"],
-            "most_recent": true
+    {
+      "name": "centos7",
+      "ami_description": "Official SPS Cent OS 7 Linux HVM AMI - Built {{ isotime \"20060102@030405\" }}",
+      "type": "amazon-ebs",
+      "region": "{{ user `aws_region` }}",
+      "source_ami_filter": {
+        "filters": {
+          "product-code": "aw0evgkw8e5c1q413zgy5pjce",
+          "root-device-type": "ebs"
         },
-        "instance_type": "t2.micro",
-        "ssh_username": "ec2-user",
-        "ami_name": "SPS - Amazon Linux HVM {{ isotime \"20060102@030405\" | clean_ami_name }}",
-        "tags": {
-            "os": "{{ build_name }}",
-            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
+        "owners": [
+          "aws-marketplace"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "SPS - CentOS Linux 7 x86_64 HVM EBS ENA {{ isotime \"20060102@030405\" | clean_ami_name }}",
+      "tags": {
+        "os": "{{ build_name }}",
+        "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
+      },
+      "run_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "run_volume_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "snapshot_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "associate_public_ip_address": true,
+      "vpc_id": "{{ user `vpc` }}",
+      "subnet_id": "{{ user `subnet` }}"
+    },
+    {
+      "name": "ubuntu16",
+      "ami_description": "Canonical, Ubuntu, 16.04 LTS",
+      "type": "amazon-ebs",
+      "region": "{{ user `aws_region` }}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
         },
-        "run_tags": {
-            "Name": "testami_{{ build_name }}"
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+      "tags": {
+        "os": "{{ build_name }}",
+        "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
+      },
+      "run_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "run_volume_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "snapshot_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "associate_public_ip_address": true,
+      "vpc_id": "{{ user `vpc` }}",
+      "subnet_id": "{{ user `subnet` }}"
+    },
+    {
+      "name": "ubuntu14",
+      "ami_description": "Canonical, Ubuntu, 14.04 LTS",
+      "type": "amazon-ebs",
+      "region": "{{ user `aws_region` }}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*",
+          "root-device-type": "ebs"
         },
-        "run_volume_tags": {
-            "Name": "testami_{{ build_name }}"
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+      "tags": {
+        "os": "{{ build_name }}",
+        "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
+      },
+      "run_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "run_volume_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "snapshot_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "associate_public_ip_address": true,
+      "vpc_id": "{{ user `vpc` }}",
+      "subnet_id": "{{ user `subnet` }}"
+    },
+    {
+      "name": "ubuntu18",
+      "ami_description": "Canonical, Ubuntu, 18.04 LTS",
+      "type": "amazon-ebs",
+      "region": "{{ user `aws_region` }}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
+          "root-device-type": "ebs"
         },
-        "snapshot_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "associate_public_ip_address": true,
-        "vpc_id": "{{ user `vpc` }}",
-        "subnet_id": "{{ user `subnet` }}"
-        },
-        {
-        "name": "ubuntu16",
-        "ami_description": "Canonical, Ubuntu, 16.04 LTS",
-        "type": "amazon-ebs",
-        "region": "{{ user `aws_region` }}",
-        "source_ami_filter": {
-            "filters": {
-                "virtualization-type": "hvm",
-                "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
-                "root-device-type": "ebs"
-            },
-            "owners": ["099720109477"],
-            "most_recent": true
-        },
-        "instance_type": "t2.micro",
-        "ssh_username": "ubuntu",
-        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
-        "tags": {
-            "os": "{{ build_name }}",
-            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
-        },
-        "run_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "run_volume_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "snapshot_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "associate_public_ip_address": true,
-        "vpc_id": "{{ user `vpc` }}",
-        "subnet_id": "{{ user `subnet` }}"
-        },
-        {
-        "name": "ubuntu14",
-        "ami_description": "Canonical, Ubuntu, 14.04 LTS",
-        "type": "amazon-ebs",
-        "region": "{{ user `aws_region` }}",
-        "source_ami_filter": {
-            "filters": {
-                "virtualization-type": "hvm",
-                "name": "ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*",
-                "root-device-type": "ebs"
-            },
-            "owners": ["099720109477"],
-            "most_recent": true
-        },
-        "instance_type": "t2.micro",
-        "ssh_username": "ubuntu",
-        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
-        "tags": {
-            "os": "{{ build_name }}",
-            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
-        },
-        "run_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "run_volume_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "snapshot_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "associate_public_ip_address": true,
-        "vpc_id": "{{ user `vpc` }}",
-        "subnet_id": "{{ user `subnet` }}"
-        },
-        {
-        "name": "ubuntu18",
-        "ami_description": "Canonical, Ubuntu, 18.04 LTS",
-        "type": "amazon-ebs",
-        "region": "{{ user `aws_region` }}",
-        "source_ami_filter": {
-            "filters": {
-                "virtualization-type": "hvm",
-                "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
-                "root-device-type": "ebs"
-            },
-            "owners": ["099720109477"],
-            "most_recent": true
-        },
-        "instance_type": "t2.micro",
-        "ssh_username": "ubuntu",
-        "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
-        "tags": {
-            "os": "{{ build_name }}",
-            "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
-        },
-        "run_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "run_volume_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "snapshot_tags": {
-            "Name": "testami_{{ build_name }}"
-        },
-        "associate_public_ip_address": true,
-        "vpc_id": "{{ user `vpc` }}",
-        "subnet_id": "{{ user `subnet` }}"
-        }
-    ],
-    "_provisioners_comments": "Install ansible on the each instance, in order to execute local ansible-playbook.",
-    "provisioners": [
-        {
-            "type": "shell",
-            "only": [ "ubuntu14", "ubuntu16" ],
-            "inline": [
-                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
-            ]
-        },
-        {
-            "type": "shell",
-            "only": [ "amazonlinux" ],
-            "inline": [
-                "sudo yum install python-pip -y",
-                "sudo pip install ansible==2.7.10"
-            ]
-        },
-        {
-            "type": "shell",
-            "only": [ "ubuntu14", "ubuntu16", "ubuntu18" ],
-            "inline": [
-                "sudo apt-get update",
-                "sudo apt-get install python-pip -y",
-                "sudo pip install ansible"
-            ]
-        },
-        {
-            "type": "shell",
-            "only": [ "ubuntu16" ],
-            "inline": [
-                "sudo pip install -U pyopenssl"
-            ]
-        },
-        {
-            "type": "ansible-local",
-            "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
-            "playbook_file": "ansible/playbook.yml",
-            "extra_arguments": [ "-vvv" ],
-            "galaxy_file": "ansible/requirements.yml",
-            "playbook_dir": "ansible"
-        },
-        {
-            "type": "shell",
-            "script": "clean.sh",
-            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
-        }
-    ],
-    "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
-    "post-processors": [
-        {
-            "type": "manifest",
-            "output": "manifest.json",
-            "strip_path": true
-        }
-    ]
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "testami_{{ build_name }}_{{ isotime \"2006-01-02_030405\" | clean_ami_name }}",
+      "tags": {
+        "os": "{{ build_name }}",
+        "release_date": "{{ isotime \"2006-01-02 03:04:05\" }}"
+      },
+      "run_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "run_volume_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "snapshot_tags": {
+        "Name": "testami_{{ build_name }}"
+      },
+      "associate_public_ip_address": true,
+      "vpc_id": "{{ user `vpc` }}",
+      "subnet_id": "{{ user `subnet` }}"
+    }
+  ],
+  "_provisioners_comments": "Install ansible on the each instance, in order to execute local ansible-playbook.",
+  "provisioners": [
+    {
+      "type": "shell",
+      "only": [
+        "ubuntu14",
+        "ubuntu16"
+      ],
+      "inline": [
+        "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+      ]
+    },
+    {
+      "type": "shell",
+      "only": [
+        "amazonlinux"
+      ],
+      "inline": [
+        "sudo yum install python-pip -y",
+        "sudo pip install ansible==2.7.10"
+      ]
+    },
+    {
+      "type": "shell",
+      "only": [
+        "ubuntu14",
+        "ubuntu16",
+        "ubuntu18"
+      ],
+      "inline": [
+        "sudo apt-get update",
+        "sudo apt-get install python-pip -y",
+        "sudo pip install ansible"
+      ]
+    },
+    {
+      "type": "shell",
+      "only": [
+        "ubuntu16"
+      ],
+      "inline": [
+        "sudo pip install -U pyopenssl"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
+      "playbook_file": "ansible/playbook.yml",
+      "extra_arguments": [
+        "-vvv"
+      ],
+      "galaxy_file": "ansible/requirements.yml",
+      "playbook_dir": "ansible"
+    },
+    {
+      "type": "shell",
+      "script": "clean.sh",
+      "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+    }
+  ],
+  "_comment_post-processors": "Write a file with the pertinent information from the output of Packer.",
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
+  ]
 }
