@@ -66,7 +66,7 @@
         "most_recent": true
       },
       "instance_type": "t2.micro",
-      "ssh_username": "ec2-user",
+      "ssh_username": "centos",
       "ami_name": "SPS - CentOS Linux 7 x86_64 HVM EBS ENA {{ isotime \"20060102@030405\" | clean_ami_name }}",
       "tags": {
         "os": "{{ build_name }}",
