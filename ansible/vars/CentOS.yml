@@ -1,0 +1,4 @@
+---
+image_group: "centos"
+chrony_service_name: "chronyd"
+
