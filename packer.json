@@ -209,7 +209,8 @@
     {
       "type": "shell",
       "only": [
-        "amazonlinux"
+        "amazonlinux",
+        "centos7"
       ],
       "inline": [
         "sudo yum install python-pip -y",
