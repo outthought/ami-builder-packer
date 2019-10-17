@@ -209,7 +209,7 @@
     {
       "type": "shell",
       "only": [
-        "amazonlinux",
+        "amazonlinux"
       ],
       "inline": [
         "sudo yum install python-pip -y",
