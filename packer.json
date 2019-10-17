@@ -210,11 +210,20 @@
       "type": "shell",
       "only": [
         "amazonlinux",
-        "centos7"
       ],
       "inline": [
         "sudo yum install python-pip -y",
         "sudo pip install ansible==2.7.10"
+      ]
+    },
+    {
+      "type": "shell",
+      "only": [
+        "centos7"
+      ],
+      "inline": [
+        "sudo yum install python3-pip -y",
+        "sudo pip3 install ansible==2.7.10"
       ]
     },
     {
