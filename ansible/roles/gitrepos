@@ -1,5 +1,5 @@
 ansible-role-sps-common includeconsul
-ansible-role-cloud-init 0.0.15
+ansible-role-cloud-init case
 ansible-role-authconfig dbus
 ansible-role-sudo 0.0.7
 ansible-role-snmpd 0.2.5
