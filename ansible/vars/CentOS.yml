@@ -1,4 +1,4 @@
 ---
-image_group: "centos"
+image_group: "amazonlinux"
 chrony_service_name: "chronyd"
 
