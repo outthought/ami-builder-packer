@@ -2,5 +2,5 @@ ansible-role-sps-common includeconsul
 ansible-role-cloud-init case
 ansible-role-authconfig dbus
 ansible-role-sudo 0.0.7
-ansible-role-snmpd 0.2.5
+ansible-role-snmpd no_filter_named_success
 ansible-role-deploy-monitor 1.2.3
