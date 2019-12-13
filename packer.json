@@ -10,6 +10,10 @@
     {
       "name": "amazonlinux",
       "ami_description": "Official SPS Amazon Linux HVM AMI - Built {{ isotime \"20060102@030405\" }}",
+      "ami_users": [
+        "104966627370",
+        "413345170962"
+      ],
       "type": "amazon-ebs",
       "region": "{{ user `aws_region` }}",
       "source_ami_filter": {
@@ -53,6 +57,10 @@
     {
       "name": "centos7",
       "ami_description": "Official SPS Cent OS 7 Linux HVM AMI - Built {{ isotime \"20060102@030405\" }}",
+      "ami_users": [
+        "104966627370",
+        "413345170962"
+      ],
       "type": "amazon-ebs",
       "region": "{{ user `aws_region` }}",
       "source_ami_filter": {
@@ -88,6 +96,10 @@
     {
       "name": "ubuntu16",
       "ami_description": "Canonical, Ubuntu, 16.04 LTS",
+      "ami_users": [
+        "104966627370",
+        "413345170962"
+      ],
       "type": "amazon-ebs",
       "region": "{{ user `aws_region` }}",
       "source_ami_filter": {
@@ -124,6 +136,10 @@
     {
       "name": "ubuntu14",
       "ami_description": "Canonical, Ubuntu, 14.04 LTS",
+      "ami_users": [
+        "104966627370",
+        "413345170962"
+      ],
       "type": "amazon-ebs",
       "region": "{{ user `aws_region` }}",
       "source_ami_filter": {
@@ -160,6 +176,10 @@
     {
       "name": "ubuntu18",
       "ami_description": "Canonical, Ubuntu, 18.04 LTS",
+      "ami_users": [
+        "104966627370",
+        "413345170962"
+      ],
       "type": "amazon-ebs",
       "region": "{{ user `aws_region` }}",
       "source_ami_filter": {
@@ -252,9 +272,9 @@
       "type": "ansible-local",
       "command": "ANSIBLE_STDOUT_CALLBACK=debug PYTHONUNBUFFERED=1 ansible-playbook",
       "playbook_file": "ansible/playbook.yml",
-       "extra_arguments": [
-         "-v"
-       ],
+      "extra_arguments": [
+        "-v"
+      ],
       "galaxy_file": "ansible/requirements.yml",
       "playbook_dir": "ansible"
     },
